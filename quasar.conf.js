@@ -46,8 +46,9 @@ module.exports = function (ctx) {
         'QLayout',
         'QHeader',
         'QDrawer',
-        'QPageContainer',
         'QPage',
+        'QPageContainer',
+        'QPageSticky',
         'QToolbar',
         'QToolbarTitle',
         'QBtn',
@@ -56,15 +57,40 @@ module.exports = function (ctx) {
         'QItem',
         'QItemSection',
         'QItemLabel',
-        'QBtn'
+        'QList',
+        'QItem',
+        'QItemSection',
+        'QItemLabel',
+        'QSeparator',
+        'QSpace',
+        'QCheckbox',
+        'QAvatar',
+        'QBanner',
+        'QDialog',
+        'QCard',
+        'QCardSection',
+        'QCardActions',
+        'QInput',
+        'QForm',
+        'QFab',
+        'QFabAction',
+        'QSelect',
+        'QField',
+        'QPopupProxy',
+        'QTable',
+        'QDate',
+        'QExpansionItem',
       ],
 
       directives: [
-        'Ripple'
+        'Ripple',
+        'ClosePopup',
       ],
 
       // Quasar plugins
-      plugins: []
+      plugins: [
+        'Loading',
+      ]
     },
 
     // https://quasar.dev/quasar-cli/cli-documentation/supporting-ie
@@ -174,7 +200,7 @@ module.exports = function (ctx) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        // appId: 'orderscontrol'
+        // appId: 'order'
       }
     }
   }

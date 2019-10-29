@@ -9,3 +9,9 @@ export default {
   name: 'App'
 }
 </script>
+
+<style>
+  .page-padding{
+    padding: 10px;
+  }
+</style>
