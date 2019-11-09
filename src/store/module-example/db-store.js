@@ -1,4 +1,4 @@
-import jsFunctions from '../../mixin/js-functions2'
+import jsFunctions from '../../mixin/js-functions2';
 
 const state = {
     allData: 
