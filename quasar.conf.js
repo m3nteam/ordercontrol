@@ -12,7 +12,7 @@ module.exports = function (ctx) {
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
     css: [
-      'app.sass'
+      'app.scss'
     ],
 
     // https://github.com/quasarframework/quasar/tree/dev/extras
@@ -46,9 +46,8 @@ module.exports = function (ctx) {
         'QLayout',
         'QHeader',
         'QDrawer',
-        'QPage',
         'QPageContainer',
-        'QPageSticky',
+        'QPage',
         'QToolbar',
         'QToolbarTitle',
         'QBtn',
@@ -56,41 +55,15 @@ module.exports = function (ctx) {
         'QList',
         'QItem',
         'QItemSection',
-        'QItemLabel',
-        'QList',
-        'QItem',
-        'QItemSection',
-        'QItemLabel',
-        'QSeparator',
-        'QSpace',
-        'QCheckbox',
-        'QAvatar',
-        'QBanner',
-        'QDialog',
-        'QCard',
-        'QCardSection',
-        'QCardActions',
-        'QInput',
-        'QForm',
-        'QFab',
-        'QFabAction',
-        'QSelect',
-        'QField',
-        'QPopupProxy',
-        'QTable',
-        'QDate',
-        'QExpansionItem',
+        'QItemLabel'
       ],
 
       directives: [
-        'Ripple',
-        'ClosePopup',
+        'Ripple'
       ],
 
       // Quasar plugins
-      plugins: [
-        'Loading',
-      ]
+      plugins: []
     },
 
     // https://quasar.dev/quasar-cli/cli-documentation/supporting-ie
@@ -200,7 +173,7 @@ module.exports = function (ctx) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        // appId: 'order'
+        // appId: 'ordercontrol'
       }
     }
   }

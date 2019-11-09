@@ -1,4 +1,4 @@
-# Quasar App (order)
+# Quasar App (ordercontrol)
 
 A Quasar Framework app
 

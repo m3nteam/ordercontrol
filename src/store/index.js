@@ -2,10 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 // import example from './module-example'
-import dbStore from './module-example/db-store'
-import partnerStore from './module-example/partner-store'
-import order from './module-example/store-import-order'
-import viewOrderStore from './module-example/store-view-order'
 
 Vue.use(Vuex)
 
@@ -18,10 +14,6 @@ export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
       // example
-      dbStore,
-      partnerStore,
-      order,
-      viewOrderStore,
     },
 
     // enable strict mode (adds overhead!)
