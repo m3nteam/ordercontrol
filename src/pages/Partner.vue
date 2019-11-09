@@ -35,7 +35,7 @@
                         <q-avatar
                             color="primary"
                             text-color="white"
-                            class="text-h5">
+                            class="text-h5 q-ml-sm">
                             {{ getInitials(partner.name) }}
                         </q-avatar>
                     </q-item-section>
@@ -48,15 +48,36 @@
                     <!-- Checkbox  -->
                      <q-item-section side>
                         <q-checkbox
-                        :value="partner.active"
-                        disabled
+                            :value="partner.active"
+                            disabled
                         ></q-checkbox>
                     </q-item-section>
                 </q-item>
             </q-list>
         </div>
 
-        <!-- {{ this.$store.state.storeDb.allData }} -->
+        <div>
+            <!-- Button for insert new partner -->
+            <q-page-sticky position="bottom" class="q-mb-md">
+                <q-btn
+                    fab
+                    icon="add"
+                    color="primary"
+                    @click="showDlgInsert"
+                    size="50px"
+                />
+            </q-page-sticky>
+
+            <!-- DIALOGS INSERT OR UPDATE -->
+            <q-dialog
+                v-model="dlgPartnerShow"
+                persistent
+            >
+                <insert-partner
+                    @insertResponse="submitDialog"
+                ></insert-partner>
+            </q-dialog>
+        </div>
     </q-page>
 </template>
 
@@ -65,7 +86,28 @@
     import jsFunctions from '../mixin/js-functions'
 
     export default {
-        mixins: [dbObjects, jsFunctions]
+        mixins: [dbObjects, jsFunctions],
+        data() {
+            return {
+                dlgPartnerShow: false
+            }
+        },
+        methods: {
+            showDlgInsert() {
+                this.dlgPartnerShow = true;
+            },
+            submitDialog(value) {
+                if (value) {
+                    console.log('insert partner');
+                    this.dlgPartnerShow = false;
+                } else {
+                    this.dlgPartnerShow = false;
+                };
+            }
+        },
+        components: {
+            'insert-partner': require('components/Partner/DlgInsert.vue').default,
+        },
     }
 </script>
 
