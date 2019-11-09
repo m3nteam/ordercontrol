@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-// import example from './module-example'
+import storeDb from './module-example/db-store'
 
 Vue.use(Vuex)
 
@@ -13,7 +13,7 @@ Vue.use(Vuex)
 export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
-      // example
+      storeDb
     },
 
     // enable strict mode (adds overhead!)
