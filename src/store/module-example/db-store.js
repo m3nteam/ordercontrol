@@ -1,5 +1,6 @@
 const state = {
-    allData: [
+    allData: 
+    [
         {
             "id" : "00001", 
             "name": "Kupac K", 

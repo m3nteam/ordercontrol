@@ -9,6 +9,7 @@ export default {
             }
             return initials;
         },
+
         prepareReport(obj){
         //Prepares data for report
             let reportObj = [];
@@ -45,13 +46,12 @@ export default {
                     }
                 });
                 
-                let finObj = [
+                let finObj = 
                     {
                         "id" : obj.id,
                         "partner" : obj.name,
                         dataSet : result
-                    }
-                ];
+                    };
                 //console.log(JSON.stringify(finObj,null,4))
                 reportObj.push(finObj);
             });
