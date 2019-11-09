@@ -2,7 +2,8 @@ const state = {
     allData: [
         {
             "id" : "00001", 
-            "name": "Kupac1", 
+            "name": "Kupac K", 
+            "active": true, 
             "orders" : [
                 { 
                     "id_ord" :"1",
@@ -26,7 +27,8 @@ const state = {
         },
         {
             "id" : "00002", 
-            "name": "Kupac2", 
+            "name": "Kupac T", 
+            "active": false, 
             "orders" : [
                 { 
                     "id_ord" :"1",

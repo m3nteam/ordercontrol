@@ -11,7 +11,7 @@
           aria-label="Menu"
         />
 
-        <q-toolbar-title class="text-center text-h5">
+        <q-toolbar-title class="text-left text-h5">
           KONTROLA PORUDŽBINA
         </q-toolbar-title>
       </q-toolbar>
