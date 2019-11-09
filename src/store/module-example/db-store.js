@@ -55,7 +55,11 @@ const mutations = {};
 
 const actions = {};
 
-const getters = {};
+const getters = {
+    getDbData(state){
+        return state.allData
+    }
+};
 
 export default{
     namespaced: true,
