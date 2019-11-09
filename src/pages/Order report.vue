@@ -28,15 +28,19 @@
 
 <script>
     import dbObjects from '../mixin/db-objects'
-    import jsFunction from '../mixin/js-functions'
     import ordersTableSettings from '../mixin/orders-table-settings'
 
     export default {
-        mixins: [dbObjects, jsFunction, ordersTableSettings],
+        mixins: [dbObjects, ordersTableSettings],
+
+        beforeMount(){
+            this.$store.dispatch('storeDb/prepareReportData', null, {root: true});
+        },
+
         computed:{
             reportData:{
                 get(){
-                    return this.prepareReport(this.dbObj);
+                    return this.$store.getters['storeDb/getReportData'];
                 }
             }
         }

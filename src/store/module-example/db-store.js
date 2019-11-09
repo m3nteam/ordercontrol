@@ -1,3 +1,5 @@
+import jsFunctions from '../../mixin/js-functions2'
+
 const state = {
     allData: 
     [
@@ -51,16 +53,31 @@ const state = {
                 }
             ] 
         }
-    ]
+    ],
+
+    reportData:[],
 };
 
-const mutations = {};
+const mutations = {
+    setReportData(state, result){
+        state.reportData = result;
+    }
+};
 
-const actions = {};
+const actions = {
+    prepareReportData({ commit, getters }, parameters){
+        let result = jsFunctions.prepareReport(getters.getDbData);
+        commit('setReportData', result);
+    }
+};
 
 const getters = {
     getDbData(state){
-        return state.allData
+        return state.allData;
+    },
+
+    getReportData(state){
+        return state.reportData;
     }
 };
 
