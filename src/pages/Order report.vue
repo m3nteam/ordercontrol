@@ -142,7 +142,7 @@
         },
 
         beforeMount(){
-            this.$store.dispatch('storeDb/prepareReportData', null, {root: true});
+            //this.$store.dispatch('storeDb/prepareReportData', null, {root: true});
         },
 
         components:{
@@ -188,6 +188,34 @@
             filterData(){
                 this.$store.dispatch('storeDb/prepareFilterData', this.filterParameters, {root: true});
                 this.isFiltered = true;
+
+                
+                    /*
+                    <!-- Date from and to filter -->
+                    <q-card-section class="row" style="min-width: 300px;">
+                        <!-- Date from -->
+                        <q-input class="col" dense outlined v-model="dateFrom" mask="date" :rules="['date']">
+                        <template v-slot:append>
+                            <q-icon name="event" class="cursor-pointer">
+                            <q-popup-proxy ref="qDateProxyFrom" transition-show="scale" transition-hide="scale">
+                                <q-date v-model="dateFrom" @input="() => $refs.qDateProxyFrom.hide()" />
+                            </q-popup-proxy>
+                            </q-icon>
+                        </template>
+                        </q-input>
+                        
+                        <!-- Date to -->
+                        <q-input class="col" dense outlined v-model="dateTo" mask="date" :rules="['date']">
+                        <template v-slot:append>
+                            <q-icon name="event" class="cursor-pointer">
+                                <q-popup-proxy ref="qDateProxyTo" transition-show="scale" transition-hide="scale">
+                                    <q-date v-model="dateTo" @input="() => $refs.qDateProxyTo.hide()" />
+                                </q-popup-proxy>
+                            </q-icon>
+                        </template>
+                        </q-input>
+                    </q-card-section>
+                    */
             },
 
             clearFilter(){
