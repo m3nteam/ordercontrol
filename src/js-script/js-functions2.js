@@ -75,15 +75,18 @@ class jsFunctions{
         return productList;
     };
 
-    static filterObj(data, filters){
+    static filterObj(data, filters){        
         return data.filter(val => {
-            let result = true;
-
+            let result = true;            
             for(var i = 0; i < filters.length; i++){
-                if(val[filters[i][0]] != filters[i][1])
-                    result = false;
+                let obj = filters[i]
 
-                return result;
+                if(obj.partner !== undefined){
+                    if(val[obj.partner[0]] != obj.partner[1])
+                        result = false;
+    
+                    return result;
+                };
             };
         });
     };

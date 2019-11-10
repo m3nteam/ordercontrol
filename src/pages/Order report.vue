@@ -138,6 +138,12 @@
                 dateTo: '',
 
                 filterParameters: [],
+                filterParametersObj: {
+                    partner:[],
+                    product:[],
+                    dateFrom:[],
+                    dateTo:[],
+                },
             }
         },
 
@@ -177,12 +183,14 @@
 
         methods:{
             partnerSelected(partnerId){
-                this.prepareFilter(['id', partnerId]);
+                this.filterParametersObj.partner = ['id', partnerId];
+                this.prepareFilter(this.filterParametersObj);
+
                 this.$store.dispatch('storeDb/prepareProductOptionsByPartner', partnerId, {root: true});
             },
 
-            prepareFilter(filterArr){
-                this.filterParameters.push(filterArr);
+            prepareFilter(filterObj){
+                this.filterParameters.push(filterObj);
             },
 
             filterData(){
