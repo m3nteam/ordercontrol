@@ -76,10 +76,10 @@
             Unesite parametre filtera
         </banner-orange>
 
-        <div>
+        <div v-else>
             <!-- Title of list when data not exists -->
             <banner-orange
-                v-if="filteredDataSet == ''"
+                v-if="filteredDataSet == null"
             >
                 Nema rezultata za unete filtere
             </banner-orange>
@@ -151,12 +151,6 @@
         },
 
         computed:{
-            reportData:{
-                get(){
-                    return this.$store.getters['storeDb/getReportData'];
-                }
-            },
-
             partnerOptions:{
                 get(){
                     return this.$store.getters['storeDb/getPartnerOptions'];
@@ -175,7 +169,7 @@
                         return this.$store.getters['storeDb/getFilteredData'];
                     }
                     else{
-                        return this.$store.getters['storeDb/getReportData'];
+                        //return this.$store.getters['storeDb/getReportData'];
                     };
                 }
             }
