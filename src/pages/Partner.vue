@@ -3,12 +3,9 @@
         class="q-pa-sm">
 
         <!-- Title of list when partners not exists -->
-        <q-banner
-            class="bg-orange text-white text-center"
-            rounded
-            v-if="this.dbObj ==''">
-            <span class="text-h5">NEMA PODATAKA</span>
-        </q-banner>  
+        <banner-orange
+            v-if="this.dbObj ==''"
+        >NEMA PODATAKA</banner-orange>
         
         <div v-else>
         <!-- Title of list when partners exists -->
@@ -107,6 +104,7 @@
         },
         components: {
             'insert-partner': require('components/Partner/DlgInsert.vue').default,
+            'banner-orange': require('components/Shared/banner-orange').default,
         },
     }
 </script>

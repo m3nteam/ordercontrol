@@ -50,6 +50,44 @@ class jsFunctions{
         return reportObj;
     };
 
+    static productOptionsByPartner(allData, partnerId){
+        let partnerProducts = allData.filter(data => data.id == partnerId);
+        let productList = [];        
+        
+        partnerProducts[0].orders.forEach(order =>{
+            order.data.forEach(product => {
+                let productObj = { code: product.code, product: product.product }
+                let newProduct = true;
+
+                for (let i = 0; i < productList.length; i++) {
+                    if (productList[i].code == product.code && productList.length !== 0) {
+                        newProduct = false;
+                        break;
+                    };
+                };
+
+                if (newProduct) {
+                    productList.push(productObj);
+                };
+            });
+        });
+
+        return productList;
+    };
+
+    static filterObj(data, filters){
+        return data.filter(val => {
+            let result = true;
+
+            for(var i = 0; i < filters.length; i++){
+                if(val[filters[i][0]] != filters[i][1])
+                    result = false;
+
+                return result;
+            };
+        });
+    };
+
 }
 
 export default jsFunctions;
