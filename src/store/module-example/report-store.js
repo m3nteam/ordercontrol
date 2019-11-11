@@ -3,6 +3,7 @@ import jsFunctions from '../../js-script/js-functions2';
 const state = {
     reportData:[],
     filterData:[],
+    reportPartners: [],
 };
 
 const mutations = {
@@ -12,8 +13,22 @@ const mutations = {
     },
 
     setFilterData(state, filterSettings){
-        //console.log(JSON.stringify(filterSettings));
         state.filterData = jsFunctions.filterObj(state.reportData, filterSettings);
+        
+        state.filterData = state.filterData.filter(data => {
+            let responce = false;
+            state.reportPartners.forEach(partner => {
+                if (partner.id == data.id) {
+                    responce = true;
+                };
+            });
+            return responce;
+        });
+    },
+
+    setReportPartners(state){
+        //add second parameter true to function and report will get only active partners
+        state.reportPartners = jsFunctions.partnerOptions(state.reportData);
     },
 
 };
@@ -21,6 +36,7 @@ const mutations = {
 const actions = {
     prepareReportData({ commit }){
         commit('setReportData', this.getters['storeDb/getDbData']);
+        commit('setReportPartners');
     },
 
     prepareFilteredData({ commit }, filterSettup){
@@ -30,11 +46,7 @@ const actions = {
 
 const getters = {
     getFilteredReportData(state){
-        let reportData = [];
-
-        reportData = jsFunctions.prepareReportSum(state.filterData);;
-
-        return reportData;
+        return jsFunctions.prepareReportSum(state.filterData);
     },
 
     getReportData(state, getters){
@@ -42,31 +54,11 @@ const getters = {
     },
     
     getFilterPartnerOptions(state){
-        let options = [];
-        state.reportData.forEach(data => options.push({id: data.id, name: data.name}));
-        
-        return options;
+        return state.reportPartners;
     },
     
     getFilterProductOptions(state){
-        let optionsFull = [];
-        let optionsUnique = [];
-
-        state.reportData.forEach(data => (
-            data.orders.forEach(order => (
-                order.data.forEach(product => (
-                    optionsFull.push({code: product.code, product: product.product})
-                ))
-            ))
-        ));
-
-        optionsUnique = Array.from(
-            new Set(optionsFull.map(prod => prod.code))
-        ).map(code => {
-            return {code: code, product: optionsFull.find(prod => prod.code === code).product};
-        });
-        
-        return optionsUnique;
+        return jsFunctions.productOptions(state.reportData);
     },
 };
 

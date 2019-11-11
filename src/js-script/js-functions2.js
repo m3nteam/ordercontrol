@@ -50,6 +50,42 @@ class jsFunctions{
         return reportObj;
     };
 
+/* ******************************************************************************************* */
+    static partnerOptions(dataSet, activePartners){
+        let activePart = activePartners || null;
+        let options = [];
+
+        dataSet.forEach(data => {
+            if (activePart == null || data.active == activePart) {
+                options.push({id: data.id, name: data.name});
+            };
+        });
+
+        return options;
+    };
+/* ******************************************************************************************* */
+    static productOptions(dataSet){
+        let optionsFull = [];
+        let optionsUnique = [];
+
+        dataSet.forEach(data => (
+            data.orders.forEach(order => (
+                order.data.forEach(product => (
+                    optionsFull.push({code: product.code, product: product.product})
+                ))
+            ))
+        ));
+
+        optionsUnique = Array.from(
+            new Set(optionsFull.map(prod => prod.code))
+        ).map(code => {
+            return {code: code, product: optionsFull.find(prod => prod.code === code).product};
+        });
+        
+        return optionsUnique;
+    };
+    
+/* ******************************************************************************************* */
     static productOptionsByPartner(allData, partnerId){
     // product filter by partner id
         let partnerProducts = allData.filter(data => data.id == partnerId);
@@ -75,7 +111,8 @@ class jsFunctions{
 
         return productList;
     };
-
+    
+/* ******************************************************************************************* */
     static filterObj(data, filters){
     // filter logic for report dataset preparation
         let dataSet = [];
