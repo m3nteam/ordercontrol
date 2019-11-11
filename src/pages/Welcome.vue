@@ -1,10 +1,12 @@
 <template>
-    <p>Welcoem</p>
+    <q-page>
+        <p>Welcome</p>
+    </q-page>
 </template>
 
 <script>
     export default {
-        
+
     }
 </script>
 

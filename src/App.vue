@@ -9,3 +9,9 @@ export default {
   name: 'App'
 }
 </script>
+
+<style>
+  .min-component-width{
+    min-width: 300px;
+  }
+</style>

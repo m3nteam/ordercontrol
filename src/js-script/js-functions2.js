@@ -1,6 +1,6 @@
 class jsFunctions{
-    static prepareReport(obj){
-    //Prepares data for report
+    static prepareReportSum(obj){
+    //Prepares sum data for report from obj dataset
         let reportObj = [];
 
         obj.forEach(obj => {
@@ -51,6 +51,7 @@ class jsFunctions{
     };
 
     static productOptionsByPartner(allData, partnerId){
+    // product filter by partner id
         let partnerProducts = allData.filter(data => data.id == partnerId);
         let productList = [];        
         
@@ -75,20 +76,64 @@ class jsFunctions{
         return productList;
     };
 
-    static filterObj(data, filters){        
-        return data.filter(val => {
-            let result = true;            
-            for(var i = 0; i < filters.length; i++){
-                let obj = filters[i]
+    static filterObj(data, filters){
+    // filter logic for report dataset preparation
+        let dataSet = [];
 
-                if(obj.partner !== undefined){
-                    if(val[obj.partner[0]] != obj.partner[1])
-                        result = false;
-    
-                    return result;
+        data.forEach(partner => {
+        //partner id filter
+            if(filters.partner == null || partner[filters.partner[0]] == filters.partner[1]){
+                let partnerTemp = {
+                    id: partner.id,
+                    name: partner.name,
+                    active: partner.active,
+                    orders: []
                 };
+                
+                partner.orders.forEach(order => {
+                //order date filter
+                    let dateFrom = null;
+                    let orderDate = null;
+                    let dateTo = null;
+
+                    if (filters.dateRange !== null) {
+                    //had a problem with date comparison and that is why dates are brocken and rebuild
+                        let dateParts = [];
+                        dateParts = order[filters.dateRange[0]].split("-");
+                        orderDate = new Date(dateParts[0], dateParts[1], dateParts[2]).getTime();
+                        
+                        dateParts = filters.dateRange[1].split("/");
+                        dateFrom = new Date(dateParts[0], dateParts[1], dateParts[2]).getTime();
+                        
+                        dateParts = filters.dateRange[2].split("/");
+                        dateTo = new Date(dateParts[0], dateParts[1], dateParts[2]).getTime();
+                    }
+                    
+                    if (filters.dateRange == null
+                            || (dateFrom <= orderDate && dateTo >= orderDate)
+                    ) {
+                        let orderTemp = {
+                            id_ord: order.id_ord,
+                            date: order.date,
+                            data: []
+                        };
+
+                        order.data.forEach(product => {
+                        //product code filter
+                            if (filters.product == null || product[filters.product[0]] == filters.product[1]) {
+                                orderTemp.data.push(product);
+                            }
+                        });
+
+                        partnerTemp.orders.push(orderTemp);
+                    }
+                });
+
+                dataSet.push(partnerTemp);
             };
         });
+        
+        return dataSet;
     };
 
 }

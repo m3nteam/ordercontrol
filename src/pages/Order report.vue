@@ -1,7 +1,7 @@
 <template>
     <q-page class="q-pa-sm">
         <!-- Filter logic -->
-        <div>
+        <div class="min-component-width">
             <q-expansion-item
                 dark
                 class="bg-primary text-h6"
@@ -12,7 +12,7 @@
             >
                 <q-card class="q-mb-sm" bordered>
                     <!-- Partner filter -->
-                    <q-card-section class="row" style="min-width: 300px;">
+                    <q-card-section class="row min-component-width">
                         <q-select
                             class="col"
                             dense
@@ -23,15 +23,13 @@
                             option-value="id"
                             option-label="name"
                             map-options
-                            @input="partnerSelected(selectedPartner.id)"
+                            @input="prepareFilterData({partner: ['id', selectedPartner.id]})"
                         />
                     </q-card-section>
                     
                     <!-- Product filter -->
                     <q-card-section
-                        v-if="selectedPartner !== ''"
-                        class="row"
-                        style="min-width: 300px;"
+                        class="row min-component-width"
                     >
                         <q-select
                             class="col"
@@ -42,12 +40,36 @@
                             option-value="code"
                             option-label="product"
                             label="Izaberite proizvod"
-                            @input="prepareFilter(['code', selectedPartner.id])"
+                            @input="prepareFilterData({product: ['code', selectedProduct.code]})"
                         />
+                    </q-card-section>
+                    
+                    <!-- Date from and to filter -->
+                    <q-card-section class="row min-component-width">
+                        <!-- Date from -->
+                        <q-input class="col" dense outlined v-model="dateFrom" mask="date">
+                        <template v-slot:append>
+                            <q-icon name="event" class="cursor-pointer">
+                            <q-popup-proxy ref="qDateProxyFrom" transition-show="scale" transition-hide="scale">
+                                <q-date v-model="dateFrom" @input="dateSelected" />
+                            </q-popup-proxy>
+                            </q-icon>
+                        </template>
+                        </q-input>
+                        
+                        <!-- Date to -->
+                        <q-input class="col" dense outlined v-model="dateTo" mask="date">
+                        <template v-slot:append>
+                            <q-icon name="event" class="cursor-pointer">
+                                <q-popup-proxy ref="qDateProxyTo" transition-show="scale" transition-hide="scale">
+                                    <q-date v-model="dateTo" @input="dateSelected" />
+                                </q-popup-proxy>
+                            </q-icon>
+                        </template>
+                        </q-input>
                     </q-card-section>
 
                     <!-- Button filter -->
-                    
                     <q-card-section class="row">
                         <q-btn
                             v-if="isFiltered == true"
@@ -59,7 +81,6 @@
                         <q-space />
 
                         <q-btn
-                            v-if="filterParameters.length > 0"
                             label="Primeni"
                             color="primary"
                             @click="filterData"
@@ -79,7 +100,7 @@
         <div v-else>
             <!-- Title of list when data not exists -->
             <banner-orange
-                v-if="filteredDataSet == null"
+                v-if="reportData == null"
             >
                 Nema rezultata za unete filtere
             </banner-orange>
@@ -96,7 +117,7 @@
                 >
                     <q-expansion-item
                         class="bg-grey-3 text-subtitle1"
-                        v-for="item in filteredDataSet"
+                        v-for="item in reportData"
                         :key="item.id"
                         :label="item.partner"
                         :caption="item.id"
@@ -132,23 +153,21 @@
             return{
                 isFiltered: false,
 
-                selectedPartner: '',
-                selectedProduct: '',
-                dateFrom: '',
-                dateTo: '',
+                selectedPartner: null,
+                selectedProduct: null,
+                dateFrom: null,
+                dateTo: null,
 
-                filterParameters: [],
                 filterParametersObj: {
-                    partner:[],
-                    product:[],
-                    dateFrom:[],
-                    dateTo:[],
+                    partner:null,
+                    product:null,
+                    dateRange:null,
                 },
             }
         },
 
         beforeMount(){
-            //this.$store.dispatch('storeDb/prepareReportData', null, {root: true});
+            this.$store.dispatch('storeReport/prepareReportData', null, {root: true});
         },
 
         components:{
@@ -159,83 +178,55 @@
         computed:{
             partnerOptions:{
                 get(){
-                    return this.$store.getters['storeDb/getPartnerOptions'];
+                    return this.$store.getters['storeReport/getFilterPartnerOptions'];
                 }
             },
 
             productOptions:{
                 get(){
-                    return this.$store.getters['storeDb/getProductOptions'];
+                    return this.$store.getters['storeReport/getFilterProductOptions'];
                 }
             },
 
-            filteredDataSet:{
+            reportData:{
                 get(){
                     if (this.isFiltered) {
-                        return this.$store.getters['storeDb/getFilteredData'];
+                        return this.$store.getters['storeReport/getReportData'];
                     }
-                    else{
-                        //return this.$store.getters['storeDb/getReportData'];
-                    };
                 }
             }
         },
 
         methods:{
-            partnerSelected(partnerId){
-                this.filterParametersObj.partner = ['id', partnerId];
-                this.prepareFilter(this.filterParametersObj);
-
-                this.$store.dispatch('storeDb/prepareProductOptionsByPartner', partnerId, {root: true});
+            prepareFilterData(filterObj){
+                this.filterParametersObj = Object.assign(this.filterParametersObj, filterObj)
             },
 
-            prepareFilter(filterObj){
-                this.filterParameters.push(filterObj);
+            dateSelected(){
+                this.prepareFilterData({dateRange: ['date', this.dateFrom, this.dateTo]});
+                this.$refs.qDateProxyFrom.hide();
+                this.$refs.qDateProxyTo.hide();
             },
 
             filterData(){
-                this.$store.dispatch('storeDb/prepareFilterData', this.filterParameters, {root: true});
                 this.isFiltered = true;
-
-                
-                    /*
-                    <!-- Date from and to filter -->
-                    <q-card-section class="row" style="min-width: 300px;">
-                        <!-- Date from -->
-                        <q-input class="col" dense outlined v-model="dateFrom" mask="date" :rules="['date']">
-                        <template v-slot:append>
-                            <q-icon name="event" class="cursor-pointer">
-                            <q-popup-proxy ref="qDateProxyFrom" transition-show="scale" transition-hide="scale">
-                                <q-date v-model="dateFrom" @input="() => $refs.qDateProxyFrom.hide()" />
-                            </q-popup-proxy>
-                            </q-icon>
-                        </template>
-                        </q-input>
-                        
-                        <!-- Date to -->
-                        <q-input class="col" dense outlined v-model="dateTo" mask="date" :rules="['date']">
-                        <template v-slot:append>
-                            <q-icon name="event" class="cursor-pointer">
-                                <q-popup-proxy ref="qDateProxyTo" transition-show="scale" transition-hide="scale">
-                                    <q-date v-model="dateTo" @input="() => $refs.qDateProxyTo.hide()" />
-                                </q-popup-proxy>
-                            </q-icon>
-                        </template>
-                        </q-input>
-                    </q-card-section>
-                    */
+                this.$store.dispatch('storeReport/prepareFilteredData', this.filterParametersObj, {root: true});
             },
 
             clearFilter(){
                 this.isFiltered = false;
 
-                this.selectedPartner = '';
-                this.selectedProduct = '';
-                this.dateFrom = '';
-                this.dateTo = '';
+                this.selectedPartner = null;
+                this.selectedProduct = null;
+                this.dateFrom = null;
+                this.dateTo = null;
 
-                this.filterParameters = [];
-            },
+                this.filterParametersObj = {
+                    partner: null,
+                    product: null,
+                    dateRange: null,
+                };
+            }
         }
     }
 </script>
