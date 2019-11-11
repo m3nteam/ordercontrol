@@ -26,9 +26,9 @@ const mutations = {
         });
     },
 
-    setReportPartners(state){
+    setReportPartners(state, showActiveOnly){
         //add second parameter true to function and report will get only active partners
-        state.reportPartners = jsFunctions.partnerOptions(state.reportData);
+        state.reportPartners = jsFunctions.partnerOptions(state.reportData, showActiveOnly);
     },
 
 };
@@ -36,11 +36,15 @@ const mutations = {
 const actions = {
     prepareReportData({ commit }){
         commit('setReportData', this.getters['storeDb/getDbData']);
-        commit('setReportPartners');
+        commit('setReportPartners', false);
     },
 
     prepareFilteredData({ commit }, filterSettup){
         commit('setFilterData', filterSettup)
+    },
+
+    prepareReportPartners({ commit }, showActiveOnly){
+        commit('setReportPartners', showActiveOnly);
     },
 };
 

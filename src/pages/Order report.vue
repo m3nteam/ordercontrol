@@ -71,20 +71,33 @@
 
                     <!-- Button filter -->
                     <q-card-section class="row">
-                        <q-btn
-                            v-if="isFiltered == true"
-                            label="Restart"
-                            color="negative"
-                            @click="clearFilter"
-                        ></q-btn>
+                        <div
+                            class="col">
+                            <q-btn
+                                v-if="isFiltered == true"
+                                label="Restart"
+                                color="negative"
+                                @click="clearFilter"
+                            ></q-btn>
+                        </div>
+                        
+                        <div class="col text-center">
+                            <q-checkbox
+                                v-model="showActiveOnly"
+                                label="Prikazi samo aktivne partnere"
+                                left-label
+                                @input="showActive"
+                            />
+                        </div>
 
-                        <q-space />
-
-                        <q-btn
-                            label="Primeni"
-                            color="primary"
-                            @click="filterData"
-                        ></q-btn>
+                        <div
+                            class="col text-right">
+                            <q-btn
+                                label="Primeni"
+                                color="primary"
+                                @click="filterData"
+                            ></q-btn>
+                        </div>
                     </q-card-section>
                 </q-card>
             </q-expansion-item>
@@ -152,6 +165,7 @@
         data(){
             return{
                 isFiltered: false,
+                showActiveOnly: false,
 
                 selectedPartner: null,
                 selectedProduct: null,
@@ -206,6 +220,10 @@
                 this.prepareFilterData({dateRange: ['date', this.dateFrom, this.dateTo]});
                 this.$refs.qDateProxyFrom.hide();
                 this.$refs.qDateProxyTo.hide();
+            },
+
+            showActive(){
+                this.$store.dispatch('storeReport/prepareReportPartners', this.showActiveOnly, {root: true})
             },
 
             filterData(){

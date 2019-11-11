@@ -52,11 +52,11 @@ class jsFunctions{
 
 /* ******************************************************************************************* */
     static partnerOptions(dataSet, activePartners){
-        let activePart = activePartners || null;
+        let activePart = activePartners || false;
         let options = [];
 
         dataSet.forEach(data => {
-            if (activePart == null || data.active == activePart) {
+            if (activePart == false || data.active == activePart) {
                 options.push({id: data.id, name: data.name});
             };
         });
