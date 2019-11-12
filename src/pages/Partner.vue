@@ -14,8 +14,6 @@
                 title="Pregled kupaca"
             >
                 <q-checkbox
-                    class="removeMP"
-
                     left-label
                     label="Prikaži sve"
                     dark

@@ -4,8 +4,7 @@
         rounded
         >
             <div class="row">
-                <span class="col text-h6">{{ title }}</span>
-
+                <span class="col text-h6 justify-center">{{ title }}</span>
                 <slot />
             </div>
     </q-banner>
@@ -16,3 +15,5 @@
         props: ['title']
     }
 </script>
+
+
