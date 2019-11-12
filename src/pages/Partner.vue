@@ -27,25 +27,17 @@
                 separator>
                 <q-item 
                     v-for="partner in this.dbObj" 
-                    :key="partner.id" 
-                    class="q-pa-sm"
+                    :key="partner.id"
                     clickable
                     v-ripple
-                    style="padding: 0;"
-                    >
-                    <q-item-section avatar>
-                        <q-avatar
-                            color="primary"
-                            text-color="white"
-                            class="text-h5 q-ml-sm">
-                            {{ getInitials(partner.name) }}
-                        </q-avatar>
-                    </q-item-section>
+                >
+                    <partner-avatar
+                        :partnerId="partner.id"
+                        :partnerName="partner.name"
+                        size="40px"
+                    />
 
-                    <q-item-section>
-                        <q-item-label caption lines="1">{{ partner.id }}</q-item-label>
-                        <q-item-label>{{ partner.name }}</q-item-label>
-                    </q-item-section>
+                    <q-space />
                     
                     <!-- Checkbox  -->
                      <q-item-section side>
@@ -112,6 +104,7 @@
             'insert-partner': require('components/Partner/DlgInsert.vue').default,
             'banner-orange': require('components/Shared/banner-orange').default,
             'banner-blue': require('components/Shared/banner-blue').default,
+            'partner-avatar': require('components/Shared/partner-avatar').default,
         },
     }
 </script>

@@ -2,53 +2,50 @@
     <q-page class="q-pa-sm">
         <!-- Title of list when data not exists -->
         <banner-orange
+            class="min-component-width"
             v-if="this.dbData ==''"
         >Nema podataka za prikaz</banner-orange>
 
         <div v-else>
             <!-- Title of list when data exists -->
             <banner-blue
+                class="min-component-width"
                 title="Pregled porudžbina"
-            ></banner-blue>
+            >
+            </banner-blue>
 
             <!-- List of data -->
-            <q-list
-                bordered
-                separator
-                class="rounded-borders"
+            <list-custom
+                class="min-component-width removeMP"
             >
-                <q-expansion-item
-                    class="bg-grey-3 text-subtitle1"
+                <expansion-custom
                     v-for="item in dbData"
                     :key="item.id"
                     :label="item.name"
                     :caption="item.id"
-                    icon="account_box"
-                    expand-separator
-                    group="group1"
+                    :item="item"
                 >
                     <q-expansion-item
-                        class="bg-grey-1 text-subtitle1"
+                        dense
                         v-for="order in item.orders"
                         :key="order.id_ord"
                         caption=""
                         :label="`Porudžbina na dan ${order.date}`"
-                        icon="account_box"
-                        expand-separator
                         group="group2"
+                        popup
                     >
-                        <q-table
+                        <product-table
                             dense
                             :data="order.data"
                             :columns="tblColumns"
                             :pagination.sync="tblPagination"
-                            :visible-columns="tblVisColImport"
-                            row-key="product"
+                            :visibleColumns="tblVisColImport"
+                            rowKey="product"
                         >
-                        </q-table>
+                        </product-table>
                     </q-expansion-item>
-                </q-expansion-item>
-            </q-list>
+                </expansion-custom>
+            </list-custom>
         </div>
     </q-page>
 </template>
@@ -63,6 +60,10 @@
         components: {
             'banner-orange': require('components/Shared/banner-orange').default,
             'banner-blue': require('components/Shared/banner-blue').default,
+            'list-custom': require('components/Shared/list').default,
+            'partner-avatar': require('components/Shared/partner-avatar').default,
+            'expansion-custom': require('components/Shared/expansion-partner').default,
+            'product-table': require('components/Shared/product-table').default,
         },
 
         computed:{

@@ -39,7 +39,7 @@ export default class jsFunctions{
             let finObj = 
                 {
                     "id" : obj.id,
-                    "partner" : obj.name,
+                    "name" : obj.name,
                     dataSet : result
                 };
 
@@ -193,5 +193,16 @@ export default class jsFunctions{
         let parts = val.split(delimiter);
         return new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
     };
+    
+/* ******************************************************************************************* */
+    getInitials(name){
+        // Function returns initials for partners
+            var names = name.split(' '),
+            initials = names[0].substring(0, 1).toUpperCase();
+                if (names.length > 1) {
+                initials += names[names.length - 1].substring(0, 1).toUpperCase();
+            }
+            return initials;
+        }
 
 };

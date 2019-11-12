@@ -19,4 +19,12 @@ export default {
     margin: 0px;
     padding: 0px;
   }
+
+  .q-item-type{
+    padding: 5px;
+  }
+
+  .q-expansion-item{
+    padding: 0px;
+  }
 </style>

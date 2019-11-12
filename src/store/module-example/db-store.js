@@ -3,7 +3,7 @@ const state = {
     [
         {
             "id" : "00001", 
-            "name": "Kupac K", 
+            "name": "Mirko Rajović", 
             "active": true, 
             "orders" : [
                 { 

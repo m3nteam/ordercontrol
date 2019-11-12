@@ -153,26 +153,23 @@
                     separator
                     class="rounded-borders"
                 >
-                    <q-expansion-item
-                        class="bg-grey-3 text-subtitle1"
+                    <expansion-custom
                         v-for="item in reportData"
                         :key="item.id"
                         :label="item.partner"
                         :caption="item.id"
-                        icon="account_box"
-                        expand-separator
-                        group="group1"
+                        :item="item"
                     >
-                        <q-table
-                            dense
-                            :data="item.dataSet"
-                            :columns="tblColumns"
-                            :pagination.sync="tblPagination"
-                            :visible-columns="tblVisColImport"
-                            row-key="product"
-                        >
-                        </q-table>
-                    </q-expansion-item>
+                            <product-table
+                                dense
+                                :data="item.dataSet"
+                                :columns="tblColumns"
+                                :pagination.sync="tblPagination"
+                                :visibleColumns="tblVisColImport"
+                                rowKey="product"
+                            >
+                            </product-table>
+                    </expansion-custom>
                 </q-list>
             </div>
         </div>
@@ -214,6 +211,8 @@
         components:{
             'banner-orange': require('components/Shared/banner-orange').default,
             'banner-blue': require('components/Shared/banner-blue').default,
+            'expansion-custom': require('components/Shared/expansion-partner').default,
+            'product-table': require('components/Shared/product-table').default,
         },
 
         computed:{

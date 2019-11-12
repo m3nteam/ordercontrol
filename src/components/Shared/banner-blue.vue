@@ -4,7 +4,8 @@
         rounded
         >
             <div class="row">
-                <span class="col text-h6 justify-center">{{ title }}</span>
+                <span class="text-h6">{{ title }}</span>
+                <q-space />
                 <slot />
             </div>
     </q-banner>
