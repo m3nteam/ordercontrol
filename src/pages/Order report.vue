@@ -17,6 +17,7 @@
                             class="col"
                             dense
                             outlined
+                            clearable
                             label="Izaberite partnera"
                             v-model="selectedPartner"
                             :options="partnerOptions"
@@ -35,6 +36,7 @@
                             class="col"
                             dense
                             outlined
+                            clearable
                             v-model="selectedProduct"
                             :options="productOptions"
                             option-value="code"
@@ -47,7 +49,13 @@
                     <!-- Date from and to filter -->
                     <q-card-section class="row min-component-width">
                         <!-- Date from -->
-                        <q-input class="col" dense outlined v-model="dateFrom" mask="date">
+                        <q-input
+                            class="col"
+                            dense
+                            outlined
+                            clearable
+                            v-model="dateFrom"
+                            mask="date">
                         <template v-slot:append>
                             <q-icon name="event" class="cursor-pointer">
                             <q-popup-proxy ref="qDateProxyFrom" transition-show="scale" transition-hide="scale">
@@ -58,7 +66,13 @@
                         </q-input>
                         
                         <!-- Date to -->
-                        <q-input class="col" dense outlined v-model="dateTo" mask="date">
+                        <q-input
+                            class="col"
+                            dense
+                            clearable
+                            outlined
+                            v-model="dateTo"
+                            mask="date">
                         <template v-slot:append>
                             <q-icon name="event" class="cursor-pointer">
                                 <q-popup-proxy ref="qDateProxyTo" transition-show="scale" transition-hide="scale">
@@ -113,7 +127,7 @@
         <div v-else>
             <!-- Title of list when data not exists -->
             <banner-orange
-                v-if="reportData == null"
+                v-if="reportData.length==0"
             >
                 Nema rezultata za unete filtere
             </banner-orange>
