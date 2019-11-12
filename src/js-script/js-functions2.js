@@ -43,7 +43,6 @@ export default class jsFunctions{
                     dataSet : result
                 };
 
-            //console.log(JSON.stringify(finObj,null,4))
             reportObj.push(finObj);
         });
 
@@ -183,6 +182,16 @@ export default class jsFunctions{
         };
 
         return result;
+    };
+    
+/* ******************************************************************************************* */
+    stringToDate(val, delimiter){
+        if (val == null) {
+            return;
+        };
+
+        let parts = val.split(delimiter);
+        return new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
     };
 
 };

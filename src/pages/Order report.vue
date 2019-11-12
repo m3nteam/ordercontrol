@@ -267,6 +267,18 @@
             },
 
             filterData(){
+                let dateF = this.jsFunctions.stringToDate(this.dateFrom, "/");
+                let dateT = this.jsFunctions.stringToDate(this.dateTo, "/");
+
+                if (dateF > dateT) {
+                    this.$q.notify({
+                        message: '"Datum od" mora biti manji od "datuma do"',
+                        color: 'negative',
+                        position: 'top'
+                    });
+                    return;
+                };
+
                 this.isFiltered = true;
                 this.$store.dispatch('storeReport/prepareFilteredData', this.filterParametersObj, {root: true});
             },
