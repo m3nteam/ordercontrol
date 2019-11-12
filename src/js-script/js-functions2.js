@@ -177,7 +177,7 @@ export default class jsFunctions{
     isNullOrEmpty(val){
         let result = false;
         var acceptable = {"undefined": 1, "boolean": 1, "object": 1};
-
+        
         if(!val && acceptable[typeof val]){
             result = !result;
         };

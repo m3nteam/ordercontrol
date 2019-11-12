@@ -52,13 +52,14 @@
                         <div class="col">
                             <q-input
                                 style="float: left;"
+                                class="q-mr-md"
                                 dense
                                 outlined
                                 clearable
                                 label="Datum od"
                                 v-model="dateFrom"
                                 mask="date"
-                                @input="dateSelected"
+                                @input="dateFrom !== '' ? dateSelected() : null"
                             >
                             <template v-slot:append>
                                 <q-icon name="event" class="cursor-pointer">
@@ -72,13 +73,14 @@
                             <!-- Date to -->
                             <q-input
                                 style="float: left;"
+                                class="q-mr-md"
                                 dense
-                                clearable
                                 outlined
+                                clearable
                                 label="Datum do"
                                 v-model="dateTo"
                                 mask="date"
-                                @input="dateSelected"
+                                @input="dateTo !== '' ? dateSelected() : null"
                             >
                             <template v-slot:append>
                                 <q-icon name="event" class="cursor-pointer">
@@ -252,7 +254,8 @@
             dateSelected(){
                 let dateF = !this.jsFunctions.isNullOrEmpty(this.dateFrom) ? this.dateFrom : null;
                 let dateT = !this.jsFunctions.isNullOrEmpty(this.dateTo) ? this.dateTo : null;
-                let obj = dateF !== null && dateT !== null ? {dateRange: ['date', dateF, dateT]} : {dateRange: null};
+                let dateArr = !this.jsFunctions.isNullOrEmpty(dateF) && !this.jsFunctions.isNullOrEmpty(dateT) ? ['date', dateF, dateT] : null;
+                let obj = {dateRange: dateArr}
                 
                 this.prepareFilterData(obj);
                 this.$refs.qDateProxyFrom.hide(obj);
@@ -276,11 +279,11 @@
                 this.dateFrom = null;
                 this.dateTo = null;
 
-                this.filterParametersObj = {
+                this.filterParametersObj = Object.assign({}, {
                     partner: null,
                     product: null,
                     dateRange: null,
-                };
+                });
             }
         }
     }
