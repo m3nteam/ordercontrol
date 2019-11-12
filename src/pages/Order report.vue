@@ -172,7 +172,6 @@
                 </q-list>
             </div>
         </div>
-        {{ this.filterParametersObj }}
     </q-page>
 </template>
 
@@ -193,8 +192,8 @@
 
                 selectedPartner: null,
                 selectedProduct: null,
-                dateFrom: "",
-                dateTo: "",
+                dateFrom: null,
+                dateTo: null,
 
                 filterParametersObj: {
                     partner:null,
