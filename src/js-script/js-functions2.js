@@ -1,4 +1,4 @@
-class jsFunctions{
+export default class jsFunctions{
     static prepareReportSum(obj){
     //Prepares sum data for report from obj dataset
         let reportObj = [];
@@ -172,7 +172,17 @@ class jsFunctions{
         
         return dataSet;
     };
+    
+/* ******************************************************************************************* */
+    isNullOrEmpty(val){
+        let result = false;
+        var acceptable = {"undefined": 1, "boolean": 1, "object": 1};
 
-}
+        if(!val && acceptable[typeof val]){
+            result = !result;
+        };
 
-export default jsFunctions;
+        return result;
+    };
+
+};

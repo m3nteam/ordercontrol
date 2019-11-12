@@ -24,7 +24,7 @@
                             option-value="id"
                             option-label="name"
                             map-options
-                            @input="prepareFilterData({partner: ['id', selectedPartner.id]})"
+                            @input="partnerSelected"
                         />
                     </q-card-section>
                     
@@ -42,45 +42,61 @@
                             option-value="code"
                             option-label="product"
                             label="Izaberite proizvod"
-                            @input="prepareFilterData({product: ['code', selectedProduct.code]})"
+                            @input="productSelected"
                         />
                     </q-card-section>
                     
                     <!-- Date from and to filter -->
                     <q-card-section class="row min-component-width">
                         <!-- Date from -->
-                        <q-input
-                            class="col"
-                            dense
-                            outlined
-                            clearable
-                            v-model="dateFrom"
-                            mask="date">
-                        <template v-slot:append>
-                            <q-icon name="event" class="cursor-pointer">
-                            <q-popup-proxy ref="qDateProxyFrom" transition-show="scale" transition-hide="scale">
-                                <q-date v-model="dateFrom" @input="dateSelected" />
-                            </q-popup-proxy>
-                            </q-icon>
-                        </template>
-                        </q-input>
-                        
-                        <!-- Date to -->
-                        <q-input
-                            class="col"
-                            dense
-                            clearable
-                            outlined
-                            v-model="dateTo"
-                            mask="date">
-                        <template v-slot:append>
-                            <q-icon name="event" class="cursor-pointer">
-                                <q-popup-proxy ref="qDateProxyTo" transition-show="scale" transition-hide="scale">
-                                    <q-date v-model="dateTo" @input="dateSelected" />
+                        <div class="col">
+                            <q-input
+                                style="float: left;"
+                                dense
+                                outlined
+                                clearable
+                                label="Datum od"
+                                v-model="dateFrom"
+                                mask="date"
+                                @input="dateSelected"
+                            >
+                            <template v-slot:append>
+                                <q-icon name="event" class="cursor-pointer">
+                                <q-popup-proxy ref="qDateProxyFrom" transition-show="scale" transition-hide="scale">
+                                    <q-date v-model="dateFrom" @input="dateSelected" />
                                 </q-popup-proxy>
-                            </q-icon>
-                        </template>
-                        </q-input>
+                                </q-icon>
+                            </template>
+                            </q-input>
+                            
+                            <!-- Date to -->
+                            <q-input
+                                style="float: left;"
+                                dense
+                                clearable
+                                outlined
+                                label="Datum do"
+                                v-model="dateTo"
+                                mask="date"
+                                @input="dateSelected"
+                            >
+                            <template v-slot:append>
+                                <q-icon name="event" class="cursor-pointer">
+                                    <q-popup-proxy ref="qDateProxyTo" transition-show="scale" transition-hide="scale">
+                                        <q-date v-model="dateTo" @input="dateSelected" />
+                                    </q-popup-proxy>
+                                </q-icon>
+                            </template>
+                            </q-input>
+                        </div>
+                        <div class="col text-right">
+                            <q-checkbox
+                                v-model="showActiveOnly"
+                                label="Prikazi samo aktivne partnere"
+                                left-label
+                                @input="showActive"
+                            />
+                        </div>
                     </q-card-section>
 
                     <!-- Button filter -->
@@ -93,15 +109,6 @@
                                 color="negative"
                                 @click="clearFilter"
                             ></q-btn>
-                        </div>
-                        
-                        <div class="col text-center">
-                            <q-checkbox
-                                v-model="showActiveOnly"
-                                label="Prikazi samo aktivne partnere"
-                                left-label
-                                @input="showActive"
-                            />
                         </div>
 
                         <div
@@ -161,30 +168,33 @@
                             row-key="product"
                         >
                         </q-table>
-
                     </q-expansion-item>
                 </q-list>
             </div>
         </div>
+        {{ this.filterParametersObj }}
     </q-page>
 </template>
 
 <script>
     import dbObjects from '../mixin/db-objects'
     import ordersTableSettings from '../mixin/orders-table-settings'
+    import jsFunctions from '../js-script/js-functions2'
 
     export default {
         mixins: [dbObjects, ordersTableSettings],
 
         data(){
             return{
+                jsFunctions: new jsFunctions(),
+
                 isFiltered: false,
                 showActiveOnly: false,
 
                 selectedPartner: null,
                 selectedProduct: null,
-                dateFrom: null,
-                dateTo: null,
+                dateFrom: "",
+                dateTo: "",
 
                 filterParametersObj: {
                     partner:null,
@@ -230,9 +240,23 @@
                 this.filterParametersObj = Object.assign(this.filterParametersObj, filterObj)
             },
 
+            partnerSelected(){
+                let obj = !this.jsFunctions.isNullOrEmpty(this.selectedPartner) ? { partner: ['id', this.selectedPartner.id] } : { partner: null };
+                this.prepareFilterData(obj);
+            },
+
+            productSelected(){
+                let obj = !this.jsFunctions.isNullOrEmpty(this.selectedProduct) ? { product: ['code', this.selectedProduct.code] } : { product: null };
+                this.prepareFilterData(obj);
+            },
+
             dateSelected(){
-                this.prepareFilterData({dateRange: ['date', this.dateFrom, this.dateTo]});
-                this.$refs.qDateProxyFrom.hide();
+                let dateF = !this.jsFunctions.isNullOrEmpty(this.dateFrom) ? this.dateFrom : null;
+                let dateT = !this.jsFunctions.isNullOrEmpty(this.dateTo) ? this.dateTo : null;
+                let obj = dateF !== null && dateT !== null ? {dateRange: ['date', dateF, dateT]} : {dateRange: null};
+                
+                this.prepareFilterData(obj);
+                this.$refs.qDateProxyFrom.hide(obj);
                 this.$refs.qDateProxyTo.hide();
             },
 
