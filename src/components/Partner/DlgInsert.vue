@@ -41,18 +41,25 @@
         <!-- Buttons for insert new partner -->
         <div class="bg-primary">
           <q-card-actions align="left">
-            <q-btn
+            <button-cancel
+                @clicked="formResponse(false)"
+            ></button-cancel>
+
+            <!-- <q-btn
               label="Odustani"
               color="negative"
               @click="formResponse(false)"
-              />
+              /> -->
 
               <q-space />
 
-            <q-btn
+            <button-ok
+                @clicked="formResponse(true)"
+            ></button-ok>
+            <!-- <q-btn
               label="Sačuvaj"
               color="positive"
-              @click="formResponse(true)"/>
+              @click="formResponse(true)"/> -->
           </q-card-actions>
         </div>
       </q-card>
@@ -61,15 +68,19 @@
 <script>
     export default {
         data() {
-            return {
-              partnerModelLocal: {name: '', active: true}
+          return {
+            partnerModelLocal: {name: '', active: true}
           }
         },
         methods: {
-            formResponse(value) {
-                this.$emit('insertResponse', value);
-            }
+          formResponse(value) {
+              this.$emit('insertResponse', value);
+          }
         },
+        components:{
+          'button-ok': require('components/Shared/button-ok').default,
+          'button-cancel': require('components/Shared/button-cancel').default,
+        }
     }
 </script>
 

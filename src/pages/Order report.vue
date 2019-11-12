@@ -103,23 +103,30 @@
 
                     <!-- Button filter -->
                     <q-card-section class="row">
-                        <div
-                            class="col">
-                            <q-btn
+                        <div class="col">
+                            <button-cancel
                                 v-if="isFiltered == true"
-                                label="Restart"
+                                @clicked="clearFilter"
+                            ></button-cancel>
+                            <!-- <q-btn
+                                v-if="isFiltered == true"
+                                round
                                 color="negative"
+                                icon="close"
                                 @click="clearFilter"
-                            ></q-btn>
+                            ></q-btn> -->
                         </div>
 
-                        <div
-                            class="col text-right">
-                            <q-btn
-                                label="Primeni"
+                        <div class="col text-right">
+                            <button-ok
+                                @clicked="filterData"
+                            ></button-ok>
+                            <!-- <q-btn
+                                round
                                 color="primary"
+                                icon="check"
                                 @click="filterData"
-                            ></q-btn>
+                            ></q-btn> -->
                         </div>
                     </q-card-section>
                 </q-card>
@@ -213,6 +220,8 @@
             'banner-blue': require('components/Shared/banner-blue').default,
             'expansion-custom': require('components/Shared/expansion-partner').default,
             'product-table': require('components/Shared/product-table').default,
+            'button-ok': require('components/Shared/button-ok').default,
+            'button-cancel': require('components/Shared/button-cancel').default,
         },
 
         computed:{

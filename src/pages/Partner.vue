@@ -77,10 +77,9 @@
 
 <script>
     import dbObjects from '../mixin/db-objects'
-    import jsFunctions from '../mixin/js-functions'
 
     export default {
-        mixins: [dbObjects, jsFunctions],
+        mixins: [dbObjects],
         data() {
             return {
                 dlgPartnerShow: false,

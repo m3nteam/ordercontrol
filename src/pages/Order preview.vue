@@ -29,11 +29,29 @@
                         dense
                         v-for="order in item.orders"
                         :key="order.id_ord"
-                        caption=""
-                        :label="`Porudžbina na dan ${order.date}`"
                         group="group2"
                         popup
                     >
+                    
+                        <template v-slot:header>
+                            <q-item>
+                                <q-item-section>
+                                    <span class="text-subtitle2">{{ `Porudžbina na dan ${order.date}` }}</span>
+                                </q-item-section>
+                            </q-item>
+                                
+                            <q-space />
+
+                            <q-item>
+                                <q-item-section>
+                                    <button-delete
+                                        @clicked="deleteOrder(order.id_ord)"
+                                    ></button-delete>
+                                </q-item-section>
+                            </q-item>
+
+                        </template>
+
                         <product-table
                             dense
                             :data="order.data"
@@ -64,6 +82,7 @@
             'partner-avatar': require('components/Shared/partner-avatar').default,
             'expansion-custom': require('components/Shared/expansion-partner').default,
             'product-table': require('components/Shared/product-table').default,
+            'button-delete': require('components/Shared/button-delete').default,
         },
 
         computed:{
@@ -71,6 +90,13 @@
                 get(){
                     return this.dbObj;
                 }
+            }
+        },
+
+        methods:{
+            deleteOrder(orderId){
+                console.log(`delete order ${orderId}`);
+                
             }
         }
     }
