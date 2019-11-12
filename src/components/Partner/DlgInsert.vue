@@ -1,13 +1,38 @@
 <template>
       <q-card>
         <q-card-section>
-          <div class="text-h6">Unos kupca</div>
+          <div class="text-h6 text-center">Unos kupca</div>
         </q-card-section>
 
-        <q-card-section>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repellendus sit voluptate voluptas eveniet porro. Rerum blanditiis perferendis totam, ea at omnis vel numquam exercitationem aut, natus minima, porro labore.
+        <q-separator color="primary" />
+
+        <!-- Field for partner name -->
+        <q-card-section style="padding-bottom: 0;">
+          <q-input
+            dense
+            outlined
+            clearable
+            label="Naziv partnera"
+            autofocus
+            ref="name"
+            :rules="[val => !!val || 'Naziv partnera mora biti popunjen']"
+            lazy-rules
+            v-model="partnerModelLocal.localId"
+          />
         </q-card-section>
 
+        <!-- Field for partner activity -->
+        <q-card-section
+          class="text-right"
+        >
+          <q-checkbox
+              label="Status aktivnosti"
+              left-label
+              v-model="partnerModelLocal.active"
+          ></q-checkbox>
+        </q-card-section>
+
+        <!-- Buttons for insert new partner -->
         <q-card-actions align="left">
           <q-btn
             label="Odustani"
@@ -27,6 +52,11 @@
 
 <script>
     export default {
+        data() {
+            return {
+              partnerModelLocal: {name: '', active: true}
+          }
+        },
         methods: {
             formResponse(value) {
                 this.$emit('insertResponse', value);
