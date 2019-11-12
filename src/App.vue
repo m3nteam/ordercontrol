@@ -14,4 +14,9 @@ export default {
   .min-component-width{
     min-width: 300px;
   }
+
+  .removeMP{
+    margin: 0px;
+    padding: 0px;
+  }
 </style>

@@ -9,12 +9,19 @@
         
         <div v-else>
         <!-- Title of list when partners exists -->
-            <q-banner
-                class="bg-primary text-white"
-                rounded
-                >
-                Pregled kupaca
-            </q-banner> 
+            
+            <banner-blue
+                title="Pregled kupaca"
+            >
+                <q-checkbox
+                    class="removeMP"
+
+                    left-label
+                    label="Prikaži sve"
+                    dark
+                    v-model="showAllPartners"
+                ></q-checkbox>
+            </banner-blue>
 
             <!-- Lists of partners -->
             <q-list 
@@ -86,7 +93,8 @@
         mixins: [dbObjects, jsFunctions],
         data() {
             return {
-                dlgPartnerShow: false
+                dlgPartnerShow: false,
+                showAllPartners: false
             }
         },
         methods: {
@@ -105,6 +113,7 @@
         components: {
             'insert-partner': require('components/Partner/DlgInsert.vue').default,
             'banner-orange': require('components/Shared/banner-orange').default,
+            'banner-blue': require('components/Shared/banner-blue').default,
         },
     }
 </script>

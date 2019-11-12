@@ -143,7 +143,9 @@
 
             <div v-else>
                 <!-- Title of list when data exists -->
-                <banner-blue>Pregled porudžbina</banner-blue>
+                <banner-blue
+                    title="Pregled porudžbina"
+                ></banner-blue>
                 
                 <!-- List of data -->
                 <q-list

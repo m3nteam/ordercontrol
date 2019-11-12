@@ -3,12 +3,16 @@
         class="bg-primary text-white"
         rounded
         >
-        <span class="text-h6"><slot /></span>
+            <div class="row">
+                <span class="col text-h6">{{ title }}</span>
+
+                <slot />
+            </div>
     </q-banner>
 </template>
 
 <script>
     export default {
-        
+        props: ['title']
     }
 </script>
