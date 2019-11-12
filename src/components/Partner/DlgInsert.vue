@@ -1,7 +1,12 @@
 <template>
-      <q-card>
-        <q-card-section>
-          <div class="text-h6 text-center">Unos kupca</div>
+      <q-card
+        class="min-component-width"
+        @keyup.esc="formResponse(false)"
+        >
+        <q-card-section class="bg-primary text-white">
+          <div 
+            class="text-h5 text-center"
+          >Unos kupca</div>
         </q-card-section>
 
         <q-separator color="primary" />
@@ -28,25 +33,28 @@
           <q-checkbox
               label="Status aktivnosti"
               left-label
+              dense
               v-model="partnerModelLocal.active"
           ></q-checkbox>
         </q-card-section>
 
         <!-- Buttons for insert new partner -->
-        <q-card-actions align="left">
-          <q-btn
-            label="Odustani"
-            color="negative"
-            @click="formResponse(false)"
-            />
+        <div class="bg-primary">
+          <q-card-actions align="left">
+            <q-btn
+              label="Odustani"
+              color="negative"
+              @click="formResponse(false)"
+              />
 
-            <q-space />
+              <q-space />
 
-          <q-btn
-            label="Sačuvaj"
-            color="primary"
-            @click="formResponse(true)"/>
-        </q-card-actions>
+            <q-btn
+              label="Sačuvaj"
+              color="positive"
+              @click="formResponse(true)"/>
+          </q-card-actions>
+        </div>
       </q-card>
 </template>
 
