@@ -28,7 +28,7 @@
                     :key="partner.id"
                     clickable
                     v-ripple
-                    @click="updateClick(partner)"
+                    @click="showDlgUpdate(partner)"
                 >
                     <partner-avatar
                         :partnerId="partner.id"
@@ -67,7 +67,7 @@
                 persistent
             >
                 <insert-partner
-                    @insertResponse="submitDialog"
+                    @insertResponse="submitDialogInsert"
                     :modelPartner="partnerModelInsert"
                 ></insert-partner>
             </q-dialog>
@@ -114,29 +114,35 @@
             }
         },
 
+        beforeCreate(){
+            this.$store.dispatch('storeDb/getDbData', null, {root: true});
+        },
+
         methods: {
             showDlgInsert() {
                 this.dlgPartnerShow = true;
             },
-            submitDialog(value) {
-                if (value[0]) {
-                    let newId = this.jsFunctions.getNewPartnerId(this.dbObj);
-                    value[1].id = newId;
-                    console.log('insert partner', value[1]);
-                };
-                this.dlgPartnerShow = false;
-            },
-            submitDialogUpdate(value) {
-                if (value[0]) {
-                    console.log('update partner', value[1]);
-                };
-                this.dlgPartnerShowUpdate = false;
-            },
-            updateClick(partner){
-                console.log('klik na partnera ', partner);
+
+            showDlgUpdate(partner){
                 this.partnerClickedObj = partner;
                 this.dlgPartnerShowUpdate = true;
                                
+            },
+
+            submitDialogInsert(value) {
+                if (value[0]) {
+                    let newId = this.jsFunctions.getNewPartnerId(this.dbObj);
+                    value[1].id = newId;
+                    this.$store.dispatch('storeDb/insertPartner', value[1], {root: true});
+                };
+                this.dlgPartnerShow = false;
+            },
+
+            submitDialogUpdate(value) {
+                if (value[0]) {
+                    this.$store.dispatch('storeDb/updatePartner', value[1], {root: true});
+                };
+                this.dlgPartnerShowUpdate = false;
             }
         },
         

@@ -1,68 +1,38 @@
+import PartnerOrder from '../../../services/PartnerOrder';
+import { Loading } from 'quasar';
+
 const state = {
-    allData: 
-    [
-        {
-            "id" : "00001", 
-            "name": "Mirko Rajović", 
-            "active": true, 
-            "orders" : [
-                { 
-                    "id_ord" :"1",
-                    "date" : "2019-11-11", 
-                    "data" : 
-                    [ 
-                        { "code" : "003362", "product" : "GC Gradia A1", "total" : 1, "__index" : 0 }, 
-                        { "code" : "003363", "product" : "GC Gradia A2", "total" : 2, "__index" : 1 },
-                    ]
-                },
-                { 
-                    "id_ord" :"2",
-                    "date" : "2019-10-02", 
-                    "data" : 
-                    [ 
-                        { "code" : "003362", "product" : "GC Gradia A1", "total" : 3, "__index" : 0 }, 
-                        { "code" : "003363", "product" : "GC Gradia A2", "total" : 4, "__index" : 1 },
-                    ]
-                }
-            ]
-        },
-        {
-            "id" : "00002", 
-            "name": "Kupac T", 
-            "active": false, 
-            "orders" : [
-                { 
-                    "id_ord" :"1",
-                    "date" : "2019-11-11", 
-                    "data" : 
-                    [ 
-                        { "code" : "003364", "product" : "GC Gradia A3", "total" : 2, "__index" : 0 }, 
-                        { "code" : "003365", "product" : "GC Gradia A4", "total" : 3, "__index" : 1 },
-                    ]
-                },
-                { 
-                    "id_ord" :"2",
-                    "date" : "2019-10-02", 
-                    "data" : 
-                    [ 
-                        { "code" : "003364", "product" : "GC Gradia A3", "total" : 4, "__index" : 0 }, 
-                        { "code" : "003365", "product" : "GC Gradia A4", "total" : 5, "__index" : 1 },
-                    ]
-                }
-            ] 
-        },
-        {
-            "id" : "00003", 
-            "name": "Kupac 3", 
-            "active": true, 
-            "orders" : [] 
-        }
-    ]
+    allData: [],
 };
 
-const mutations = {};
+const mutations = {
+    getDbData(state, dbData){
+        state.allData = dbData;
+    }
+};
 
-const actions = {};
+const actions = {
+    async getDbData({ commit }, payload){
+        Loading.show();
+        let dbData = await PartnerOrder.getDbData();
+        commit('getDbData', dbData);
+        Loading.hide();
+    },
+
+    async insertPartner({ commit, dispatch }, payload){
+        Loading.show();
+        await PartnerOrder.insertDbData(payload);
+        await dispatch('getDbData');
+        Loading.hide();
+    },
+
+    async updatePartner({ commit, dispatch }, payload){
+        Loading.show();
+        await PartnerOrder.updateDbData(payload);
+        await dispatch('getDbData');
+        Loading.hide();
+    }
+};
 
 const getters = {
     getDbData(state){
