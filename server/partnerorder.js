@@ -42,10 +42,8 @@ router.put("/updatedata", async (req,res) => {
 
 
 async function loadPartnerOrderCollection() {
-    //'mongodb://localhost/podaci'
-    //'mongodb+srv://nikola:Thenikgame93@cluster0-b924k.mongodb.net/test?retryWrites=true&w=majority'
-    const uri = 'mongodb://localhost/'
-    //const uri = 'mongodb+srv://rajovicmirko:Mirkasin.12345@cluster0-folf1.mongodb.net/admin?retryWrites=true&w=majority'
+    //const uri = 'mongodb://localhost/'
+    const uri = 'mongodb+srv://rajovicmirko:Mirkasin.12345@cluster0-folf1.mongodb.net/admin?retryWrites=true&w=majority'
     const dbName = 'orders'
     const collection = 'partnerorder'
 
