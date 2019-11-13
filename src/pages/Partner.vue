@@ -103,7 +103,6 @@
                 jsFunctions: new jsFunctions(),
                 dlgPartnerShow: false,
                 dlgPartnerShowUpdate: false,
-                showAllPartners: false,
                 partnerClickedObj: null,
                 partnerModelInsert:{
                     id: null,
@@ -113,7 +112,16 @@
                 }
             }
         },
-
+        computed: {
+            showAllPartners: {
+                get() {
+                    return this.$store.getters['storeDb/showAllPartners'];
+                },
+                set(val) {
+                    this.$store.dispatch('storeDb/setShowAllPartners', val, {root: true});
+                }
+            }
+        },
         beforeCreate(){
             this.$store.dispatch('storeDb/getDbData', null, {root: true});
         },
@@ -143,6 +151,11 @@
                     this.$store.dispatch('storeDb/updatePartner', value[1], {root: true});
                 };
                 this.dlgPartnerShowUpdate = false;
+            },
+
+            showPartners() {
+                console.log('nesto', this.showAllPartners);
+                
             }
         },
         

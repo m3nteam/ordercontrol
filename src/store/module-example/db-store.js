@@ -3,11 +3,17 @@ import { Loading } from 'quasar';
 
 const state = {
     allData: [],
+    activeData: [],
+    showAllPartners: false,
 };
 
 const mutations = {
     getDbData(state, dbData){
         state.allData = dbData;
+        state.activeData = dbData.filter(partner => partner.active == true);
+    },
+    setShowAllPartners(state, val) {
+        state.showAllPartners = val;
     }
 };
 
@@ -31,13 +37,21 @@ const actions = {
         await PartnerOrder.updateDbData(payload);
         await dispatch('getDbData');
         Loading.hide();
+    },
+
+    setShowAllPartners({ commit }, val) {
+        commit('setShowAllPartners', val);
     }
 };
 
 const getters = {
     getDbData(state){
-        return state.allData;
+        return  state.showAllPartners ? state.allData : state.activeData;
     },
+
+    showAllPartners() {
+        return state.showAllPartners;
+    }
 };
 
 export default{
