@@ -20,11 +20,7 @@ export default {
     padding: 0px;
   }
 
-  .q-item-type{
-    padding: 5px;
-  }
-
   .q-expansion-item{
-    padding: 0px;
-  }
+    @extend .q-list;
+  } 
 </style>
