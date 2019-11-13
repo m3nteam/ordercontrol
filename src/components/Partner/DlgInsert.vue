@@ -22,7 +22,7 @@
             ref="name"
             :rules="[val => !!val || 'Naziv partnera mora biti popunjen']"
             lazy-rules
-            v-model="partnerModelLocal.localId"
+            v-model="partnerModelLocal.name"
           />
         </q-card-section>
 
@@ -45,21 +45,11 @@
                 @clicked="formResponse(false)"
             ></button-cancel>
 
-            <!-- <q-btn
-              label="Odustani"
-              color="negative"
-              @click="formResponse(false)"
-              /> -->
-
-              <q-space />
+            <q-space />
 
             <button-ok
                 @clicked="formResponse(true)"
             ></button-ok>
-            <!-- <q-btn
-              label="Sačuvaj"
-              color="positive"
-              @click="formResponse(true)"/> -->
           </q-card-actions>
         </div>
       </q-card>
@@ -69,10 +59,11 @@
   import buttonMixin from '../../mixin/buttons-mixin'
     export default {
         mixins:[ buttonMixin ],
+        props:[ 'modelPartner' ],
 
         data() {
           return {
-            partnerModelLocal: {name: '', active: true}
+            partnerModelLocal: Object.assign({}, this.modelPartner),
           }
         },
 

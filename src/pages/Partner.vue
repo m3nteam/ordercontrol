@@ -68,6 +68,7 @@
             >
                 <insert-partner
                     @insertResponse="submitDialog"
+                    :modelPartner="partnerModel"
                 ></insert-partner>
             </q-dialog>
 
@@ -100,7 +101,14 @@
                 dlgPartnerShow: false,
                 dlgPartnerShowUpdate: false,
                 showAllPartners: false,
-                partnerClickedObj: null
+                partnerClickedObj: null,
+                partnerModel:{
+                    _id: null,
+                    id: null,
+                    name: null,
+                    active: null,
+                    orders: []
+                }
             }
         },
 
