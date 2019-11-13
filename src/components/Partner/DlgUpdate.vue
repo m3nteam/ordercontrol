@@ -53,21 +53,11 @@
                 @clicked="formResponse(false)"
             ></button-cancel>
 
-            <!-- <q-btn
-              label="Odustani"
-              color="negative"
-              @click="formResponse(false)"
-              /> -->
-
-              <q-space />
+            <q-space />
 
             <button-ok
                 @clicked="formResponse(true)"
             ></button-ok>
-            <!-- <q-btn
-              label="Sačuvaj"
-              color="positive"
-              @click="formResponse(true)"/> -->
           </q-card-actions>
         </div>
       </q-card>
@@ -81,11 +71,12 @@
         mixins:[ buttonMixin ],
         props: ['partnerObj'],
 
-        computed: {
-          partnerModelLocal() {
-            return {id: this.partnerObj.id, name: this.partnerObj.name, active: this.partnerObj.active};
+        data(){
+          return{
+            partnerModelLocal: Object.assign({}, this.partnerObj)
           }
         },
+
         methods: {
           formResponse(value) {
             let arr = [value, this.partnerModelLocal]
