@@ -196,13 +196,19 @@ export default class jsFunctions{
     
 /* ******************************************************************************************* */
     getInitials(name){
-        // Function returns initials for partners
-            var names = name.split(' '),
-            initials = names[0].substring(0, 1).toUpperCase();
-                if (names.length > 1) {
-                initials += names[names.length - 1].substring(0, 1).toUpperCase();
-            }
-            return initials;
+    // Function returns initials for partners
+        var names = name.split(' '),
+        initials = names[0].substring(0, 1).toUpperCase();
+            if (names.length > 1) {
+            initials += names[names.length - 1].substring(0, 1).toUpperCase();
         }
-
+        return initials;
+    }
+    
+/* ******************************************************************************************* */
+    getNewPartnerId(dbObj){
+        let partnerCount = (dbObj.length + 1).toString();
+        let newId = "00000" + partnerCount;
+        newId = newId.slice(partnerCount.length);
+    }
 };
