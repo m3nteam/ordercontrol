@@ -69,7 +69,8 @@
 
         methods: {
           formResponse(value) {
-              this.$emit('insertResponse', value);
+            let arr = [value, this.partnerModelLocal]
+            this.$emit('insertResponse', arr);
           }
         }
     }

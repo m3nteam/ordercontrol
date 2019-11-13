@@ -68,7 +68,7 @@
             >
                 <insert-partner
                     @insertResponse="submitDialog"
-                    :modelPartner="partnerModel"
+                    :modelPartner="partnerModelInsert"
                 ></insert-partner>
             </q-dialog>
 
@@ -92,21 +92,23 @@
     import bannerMixin from '../mixin/banners-mixin'
     import listMixin from '../mixin/lists-mixin'
     import partnerComponentMixin from '../mixin/partner-components-mixin'
+    //class
+    import jsFunctions from '../js-script/js-functions2'
 
     export default {
         mixins: [dbObjects, bannerMixin, listMixin, partnerComponentMixin],
 
         data() {
             return {
+                jsFunctions: new jsFunctions(),
                 dlgPartnerShow: false,
                 dlgPartnerShowUpdate: false,
                 showAllPartners: false,
                 partnerClickedObj: null,
-                partnerModel:{
-                    _id: null,
+                partnerModelInsert:{
                     id: null,
                     name: null,
-                    active: null,
+                    active: true,
                     orders: []
                 }
             }
@@ -117,8 +119,10 @@
                 this.dlgPartnerShow = true;
             },
             submitDialog(value) {
-                if (value) {
-                    console.log('insert partner');
+                if (value[0]) {
+                    let newId = this.jsFunctions.getNewPartnerId(this.dbObj);
+                    value[1].id = newId;
+                    console.log('insert partner', value[1]);
                 };
                 this.dlgPartnerShow = false;
             },
