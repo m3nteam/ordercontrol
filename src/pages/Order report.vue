@@ -108,25 +108,12 @@
                                 v-if="isFiltered == true"
                                 @clicked="clearFilter"
                             ></button-cancel>
-                            <!-- <q-btn
-                                v-if="isFiltered == true"
-                                round
-                                color="negative"
-                                icon="close"
-                                @click="clearFilter"
-                            ></q-btn> -->
                         </div>
 
                         <div class="col text-right">
                             <button-ok
                                 @clicked="filterData"
                             ></button-ok>
-                            <!-- <q-btn
-                                round
-                                color="primary"
-                                icon="check"
-                                @click="filterData"
-                            ></q-btn> -->
                         </div>
                     </q-card-section>
                 </q-card>
@@ -155,41 +142,44 @@
                 ></banner-blue>
                 
                 <!-- List of data -->
-                <q-list
-                    bordered
-                    separator
-                    class="rounded-borders"
-                >
-                    <expansion-custom
+                <list-custom>
+                    <expansion-partner-custom
                         v-for="item in reportData"
                         :key="item.id"
                         :label="item.partner"
                         :caption="item.id"
                         :item="item"
                     >
-                            <product-table
-                                dense
-                                :data="item.dataSet"
-                                :columns="tblColumns"
-                                :pagination.sync="tblPagination"
-                                :visibleColumns="tblVisColImport"
-                                rowKey="product"
-                            >
-                            </product-table>
-                    </expansion-custom>
-                </q-list>
+                        <product-table
+                            dense
+                            :data="item.dataSet"
+                            :columns="tblColumns"
+                            :pagination="tblPagination"
+                            :visibleColumns="tblVisColImport"
+                            rowKey="product"
+                        >
+                        </product-table>
+                    </expansion-partner-custom>
+                </list-custom>
             </div>
         </div>
     </q-page>
 </template>
 
 <script>
+    //mixin
     import dbObjects from '../mixin/db-objects'
     import ordersTableSettings from '../mixin/orders-table-settings'
+    import buttonMixin from '../mixin/buttons-mixin'
+    import bannerMixin from '../mixin/banners-mixin'
+    import listMixin from '../mixin/lists-mixin'
+    import partnerComponentMixin from '../mixin/partner-components-mixin'
+    import productComponentMixin from '../mixin/product-components-mixin'
+    //class
     import jsFunctions from '../js-script/js-functions2'
 
     export default {
-        mixins: [dbObjects, ordersTableSettings],
+        mixins: [dbObjects, ordersTableSettings, buttonMixin, bannerMixin, listMixin, partnerComponentMixin, productComponentMixin],
 
         data(){
             return{
@@ -213,15 +203,6 @@
 
         beforeMount(){
             this.$store.dispatch('storeReport/prepareReportData', null, {root: true});
-        },
-
-        components:{
-            'banner-orange': require('components/Shared/banner-orange').default,
-            'banner-blue': require('components/Shared/banner-blue').default,
-            'expansion-custom': require('components/Shared/expansion-partner').default,
-            'product-table': require('components/Shared/product-table').default,
-            'button-ok': require('components/Shared/button-ok').default,
-            'button-cancel': require('components/Shared/button-cancel').default,
         },
 
         computed:{

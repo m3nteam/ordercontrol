@@ -19,7 +19,8 @@
 </template>
 
 <script>
-import jsFunctions from '../../js-script/js-functions2'
+    //class
+    import jsFunctions from '../../js-script/js-functions2'
 
     export default {
         props:['partnerId', 'partnerName', 'size'],

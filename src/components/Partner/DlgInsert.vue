@@ -66,20 +66,20 @@
 </template>
 
 <script>
+  import buttonMixin from '../../mixin/buttons-mixin'
     export default {
+        mixins:[ buttonMixin ],
+
         data() {
           return {
             partnerModelLocal: {name: '', active: true}
           }
         },
+
         methods: {
           formResponse(value) {
               this.$emit('insertResponse', value);
           }
-        },
-        components:{
-          'button-ok': require('components/Shared/button-ok').default,
-          'button-cancel': require('components/Shared/button-cancel').default,
         }
     }
 </script>

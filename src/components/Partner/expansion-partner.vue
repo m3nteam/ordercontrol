@@ -18,11 +18,11 @@
 </template>
 
 <script>
-export default {
-    props:['item'],
+    export default {
+        props:['item'],
 
-    components:{
-        'partner-avatar': require('components/Shared/partner-avatar').default,
+        components:{
+            'partner-avatar': require('../Partner/partner-avatar').default
+        }
     }
-}
 </script>

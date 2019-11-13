@@ -22,14 +22,13 @@
             </banner-blue>
 
             <!-- Lists of partners -->
-            <q-list 
-                bordered
-                separator>
+            <list-custom>
                 <q-item 
                     v-for="partner in this.dbObj" 
                     :key="partner.id"
                     clickable
                     v-ripple
+                    @click="testClick(partner.id)"
                 >
                     <partner-avatar
                         :partnerId="partner.id"
@@ -46,8 +45,18 @@
                             disabled
                         ></q-checkbox>
                     </q-item-section>
+
+                    
+                    <q-dialog
+                        v-model="dlgPartnerShowUpdate"
+                        persistent
+                    >
+                        <update-partner
+                            @insertResponse="submitDialog"
+                        ></update-partner>
+                    </q-dialog>
                 </q-item>
-            </q-list>
+            </list-custom>
         </div>
 
         <div>
@@ -76,16 +85,23 @@
 </template>
 
 <script>
+    //mixin
     import dbObjects from '../mixin/db-objects'
+    import bannerMixin from '../mixin/banners-mixin'
+    import listMixin from '../mixin/lists-mixin'
+    import partnerComponentMixin from '../mixin/partner-components-mixin'
 
     export default {
-        mixins: [dbObjects],
+        mixins: [dbObjects, bannerMixin, listMixin, partnerComponentMixin],
+
         data() {
             return {
                 dlgPartnerShow: false,
+                dlgPartnerShowUpdate: false,
                 showAllPartners: false
             }
         },
+
         methods: {
             showDlgInsert() {
                 this.dlgPartnerShow = true;
@@ -97,13 +113,17 @@
                 } else {
                     this.dlgPartnerShow = false;
                 };
+            },
+            testClick(id){
+                console.log('klik na partnera ', id);
+                this.dlgPartnerShowUpdate = true;
+                
             }
         },
+        
         components: {
             'insert-partner': require('components/Partner/DlgInsert.vue').default,
-            'banner-orange': require('components/Shared/banner-orange').default,
-            'banner-blue': require('components/Shared/banner-blue').default,
-            'partner-avatar': require('components/Shared/partner-avatar').default,
+            'update-partner': require('components/Partner/DlgUpdate.vue').default,
         },
     }
 </script>

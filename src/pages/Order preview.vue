@@ -18,7 +18,7 @@
             <list-custom
                 class="min-component-width removeMP"
             >
-                <expansion-custom
+                <expansion-partner-custom
                     v-for="item in dbData"
                     :key="item.id"
                     :label="item.name"
@@ -32,7 +32,6 @@
                         group="group2"
                         popup
                     >
-                    
                         <template v-slot:header>
                             <q-item>
                                 <q-item-section>
@@ -62,28 +61,24 @@
                         >
                         </product-table>
                     </q-expansion-item>
-                </expansion-custom>
+                </expansion-partner-custom>
             </list-custom>
         </div>
     </q-page>
 </template>
 
 <script>
+    //mixin
     import dbObjects from '../mixin/db-objects'
     import ordersTableSettings from '../mixin/orders-table-settings'
+    import buttonMixin from '../mixin/buttons-mixin'
+    import bannerMixin from '../mixin/banners-mixin'
+    import listMixin from '../mixin/lists-mixin'
+    import partnerComponentMixin from '../mixin/partner-components-mixin'
+    import productComponentMixin from '../mixin/product-components-mixin'
 
     export default {
-        mixins: [dbObjects, ordersTableSettings],
-
-        components: {
-            'banner-orange': require('components/Shared/banner-orange').default,
-            'banner-blue': require('components/Shared/banner-blue').default,
-            'list-custom': require('components/Shared/list').default,
-            'partner-avatar': require('components/Shared/partner-avatar').default,
-            'expansion-custom': require('components/Shared/expansion-partner').default,
-            'product-table': require('components/Shared/product-table').default,
-            'button-delete': require('components/Shared/button-delete').default,
-        },
+        mixins: [dbObjects, ordersTableSettings, buttonMixin, bannerMixin, listMixin, partnerComponentMixin, productComponentMixin],
 
         computed:{
             dbData:{
