@@ -6,10 +6,22 @@
         <q-card-section class="bg-primary text-white">
           <div 
             class="text-h5 text-center"
-          >Unos kupca</div>
+          >Ispravka kupca</div>
         </q-card-section>
 
         <q-separator color="primary" />
+
+        <!-- Field for partner id -->
+        <q-card-section style="padding-bottom: 0;">
+          <q-input
+            dense
+            outlined
+            readonly
+            label="Šifra partnera"
+            autofocus
+            :value="partnerModelLocal.id"
+          />
+        </q-card-section>
 
         <!-- Field for partner name -->
         <q-card-section style="padding-bottom: 0;">
@@ -18,11 +30,7 @@
             outlined
             clearable
             label="Naziv partnera"
-            autofocus
-            ref="name"
-            :rules="[val => !!val || 'Naziv partnera mora biti popunjen']"
-            lazy-rules
-            v-model="partnerModelLocal.localId"
+            v-model="partnerModelLocal.name"
           />
         </q-card-section>
 
@@ -71,21 +79,18 @@
 
     export default {
         mixins:[ buttonMixin ],
+        props: ['partnerObj'],
 
-        data() {
-          return {
-            partnerModelLocal: {name: '', active: true}
+        computed: {
+          partnerModelLocal() {
+            return {id: this.partnerObj.id, name: this.partnerObj.name, active: this.partnerObj.active};
           }
         },
-
         methods: {
           formResponse(value) {
-              this.$emit('insertResponse', value);
+            let arr = [value, this.partnerModelLocal]
+            this.$emit('updateResponse', arr);
           }
         }
     }
 </script>
-
-<style>
-
-</style>

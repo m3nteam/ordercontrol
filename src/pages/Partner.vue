@@ -28,7 +28,7 @@
                     :key="partner.id"
                     clickable
                     v-ripple
-                    @click="testClick(partner.id)"
+                    @click="updateClick(partner)"
                 >
                     <partner-avatar
                         :partnerId="partner.id"
@@ -45,16 +45,6 @@
                             disabled
                         ></q-checkbox>
                     </q-item-section>
-
-                    
-                    <q-dialog
-                        v-model="dlgPartnerShowUpdate"
-                        persistent
-                    >
-                        <update-partner
-                            @insertResponse="submitDialog"
-                        ></update-partner>
-                    </q-dialog>
                 </q-item>
             </list-custom>
         </div>
@@ -71,7 +61,7 @@
                 />
             </q-page-sticky>
 
-            <!-- DIALOGS INSERT OR UPDATE -->
+            <!-- DIALOG INSERT -->
             <q-dialog
                 v-model="dlgPartnerShow"
                 persistent
@@ -79,6 +69,17 @@
                 <insert-partner
                     @insertResponse="submitDialog"
                 ></insert-partner>
+            </q-dialog>
+
+            <!-- Dijalog za update partnera -->
+            <q-dialog
+                v-model="dlgPartnerShowUpdate"
+                persistent
+            >
+                <update-partner
+                    @updateResponse="submitDialogUpdate"
+                    :partnerObj="partnerClickedObj"
+                ></update-partner>
             </q-dialog>
         </div>
     </q-page>
@@ -98,7 +99,8 @@
             return {
                 dlgPartnerShow: false,
                 dlgPartnerShowUpdate: false,
-                showAllPartners: false
+                showAllPartners: false,
+                partnerClickedObj: null
             }
         },
 
@@ -109,15 +111,20 @@
             submitDialog(value) {
                 if (value) {
                     console.log('insert partner');
-                    this.dlgPartnerShow = false;
-                } else {
-                    this.dlgPartnerShow = false;
                 };
+                this.dlgPartnerShow = false;
             },
-            testClick(id){
-                console.log('klik na partnera ', id);
+            submitDialogUpdate(value) {
+                if (value[0]) {
+                    console.log('update partner', value[1]);
+                };
+                this.dlgPartnerShowUpdate = false;
+            },
+            updateClick(partner){
+                console.log('klik na partnera ', partner);
+                this.partnerClickedObj = partner;
                 this.dlgPartnerShowUpdate = true;
-                
+                               
             }
         },
         
