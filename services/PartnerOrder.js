@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-//const url = process.env.NODE_ENV === 'production'? 'api/partners/' : 'http://localhost:5000/api/partners/'
-const url = 'http://localhost:5000/api/partnerorder/'
+const url = process.env.NODE_ENV === 'production'? 'api/partnerorder/' : 'http://localhost:5000/api/partnerorder/'
+//const url = 'http://localhost:5000/api/partnerorder/'
 
 class OrderService{
     //Get posts
