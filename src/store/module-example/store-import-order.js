@@ -15,7 +15,9 @@ const mutations = {
         let partners = [];
 
         state.dbData.forEach(partner => {
-            partners.push({_id: partner._id, name:partner.name});
+            if (partner.active == true) {
+                partners.push({_id: partner._id, name:partner.name});
+            }
         });
         
         state.optionsPartner = partners;
