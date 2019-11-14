@@ -73,6 +73,7 @@ const actions = {
 
     saveImportData({ dispatch }, payload){
         console.log(payload);
+        let partnerToUpdateObj = 1
         return;
         dispatch('storeDb/updatePartner', payload, {root: true});
     },
