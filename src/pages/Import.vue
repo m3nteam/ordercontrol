@@ -2,11 +2,11 @@
 <template>
   <div>
     <input ref="excel-upload-input" class="excel-upload-input" type="file" accept=".xlsx, .xls" @change="handleClick" />
-    <div v-if="excelData.results == null" class="drop" @drop="handleDrop" @dragover="handleDragover" @dragenter="handleDragover">
-      Drop excel file here or
-      <q-btn :loading="loading" size="mini" @click="handleUpload" color="primary">
+    <div v-if="excelData.results == null" class="drop" @drop="handleDrop" @dragover="handleDragover" @dragenter="handleDragover" @click="handleUpload">
+      Drop excel file here or click to browse file
+      <!-- <q-btn :loading="loading" size="mini" @click="handleUpload" color="primary">
         Browse
-      </q-btn>
+      </q-btn> -->
     </div>
 
     <div
@@ -68,20 +68,23 @@
             </div>
         </q-banner>
 
-        <q-table
-            dense
+        <product-table
             :data="data"
-            :columns="columns"
-            row-key="product"
-            :pagination.sync="pagination"
+            :columns="tblColumns"
+            :pagination.sync="tblPagination"
             :visibleColumns="tblVisColImport"
-        >
-        </q-table>
+            rowKey="product"
+            @updatePagination="handleUpdatePagination"
+        />
         
-        <div class="row">
-            <q-btn class="customFloatLeft" color="primary" label="Isprazni tabelu" @click="emptyFilledTable" />
+        <div class="row q-mt-sm">
+            <button-cancel
+                @clicked="emptyFilledTable"
+            ></button-cancel>
             <q-space />
-            <q-btn class="customFloatLeft" color="primary" label="Sačuvaj izmene" @click="saveDataToDb" />
+            <button-ok
+                @clicked="saveDataToDb"
+            ></button-ok>
         </div>
     </div>
   </div>
@@ -90,11 +93,16 @@
 <script>
     import XLSX from 'xlsx'
     import { mapState, mapActions, mapGetters } from 'vuex'
-    //import { log } from 'util';
     //mixin
     import ordersTableSettings from '../mixin/orders-table-settings'
+    import productComponentMixin from '../mixin/product-components-mixin'
+    import buttonMixin from '../mixin/buttons-mixin'
+    //class
+    import dbClass from '../../Class/Db'
+    import partnerClass from '../../Class/Partner'
 
     export default {
+        mixins: [ordersTableSettings, productComponentMixin, buttonMixin],
         props: {
             beforeUpload: Function, // eslint-disable-line
             onSuccess: Function// eslint-disable-line
@@ -109,9 +117,6 @@
         computed:{
             ...mapState('storeImport', ['optionsPartner']),
             ...mapGetters('storeImport', ['importDate', 'excelData', 'partnerId']),
-            ...mapState('viewOrderStore', ['tblColumns', 'tblPagination', 'tblVisColImport']),
-
-            
 
             importDateLocal:{
                 get(){
@@ -131,27 +136,14 @@
                 }
             },
 
-            pagination:{
+            dbData:{
                 get(){
-                    return this.tblPagination
-                },
-                set(value){
-                    this.setTblPagination(value)
-                }
-            },
-
-            columns:{
-                get(){
-                    return this.tblColumns
-                },
-                set(value){
-                    this.setTblColumns(value)
+                    return this.$store.getters['storeImport/getDbData']
                 }
             }
         },
 
         methods: {
-            ...mapActions('viewOrderStore', [ 'setTblPagination', 'setTblColumns' ]),
             ...mapActions('storeImport', ['setInitValues', 'setImportDate', 'setExcelData', 'setPartnerId', 'getdbPartners', 'saveImportData' ]),
 
             isExcel(file) {
@@ -228,6 +220,7 @@
                         
                         /* CODE FIXING AND RESULT PREPAREING*/
                         let excelData = XLSX.utils.sheet_to_json(worksheet);
+
                         let payloadData = [];
                         let payloadIndex = 0;
                         excelData.forEach(element => {
@@ -257,14 +250,20 @@
             },
 
             saveDataToDb() {
-                let payload= {
-                    partnerId: this.partnerId,
+                let partnerId = this.partnerId;
+
+                let order = {
+                    id_ord: null,
                     date: this.importDate,
-                    data: this.excelData.results,
-                    active: true
-                }
-                
-                this.saveImportData(payload)
+                    data: this.excelData.results
+                };
+
+                let payload = {
+                    partnerId: partnerId,
+                    order: order,
+                };
+
+                this.$store.dispatch('storeImport/saveImportData', payload, {root: true});
                 this.emptyFilledTable();
             },
 

@@ -133,21 +133,12 @@ export default class jsFunctions{
                     let dateTo = null;
 
                     if (filters.dateRange !== null) {
-                    //had a problem with date comparison and that is why dates are brocken and rebuild
-                        let dateParts = [];
-                        dateParts = order[filters.dateRange[0]].split("-");
-                        orderDate = new Date(dateParts[0], dateParts[1], dateParts[2]).getTime();
-                        
-                        dateParts = filters.dateRange[1].split("/");
-                        dateFrom = new Date(dateParts[0], dateParts[1], dateParts[2]).getTime();
-                        
-                        dateParts = filters.dateRange[2].split("/");
-                        dateTo = new Date(dateParts[0], dateParts[1], dateParts[2]).getTime();
+                        orderDate = this.stringToDate(order[filters.dateRange[0]], "/");
+                        dateFrom = this.stringToDate(filters.dateRange[1], "/");
+                        dateTo = this.stringToDate(filters.dateRange[2], "/");
                     }
                     
-                    if (filters.dateRange == null
-                            || (dateFrom <= orderDate && dateTo >= orderDate)
-                    ) {
+                    if (filters.dateRange == null || (dateFrom <= orderDate && dateTo >= orderDate)) {
                         let orderTemp = {
                             id_ord: order.id_ord,
                             date: order.date,
@@ -185,7 +176,7 @@ export default class jsFunctions{
     };
     
 /* ******************************************************************************************* */
-    stringToDate(val, delimiter){
+    static stringToDate(val, delimiter){
         if (val == null) {
             return;
         };

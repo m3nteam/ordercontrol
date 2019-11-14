@@ -22,5 +22,11 @@ export default{
             },
             tblVisColImport: [ "code", "product", "total"], 
         }
+    },
+
+    methods:{
+        handleUpdatePagination(val){
+            this.tblPagination = val;
+        }
     }
 }

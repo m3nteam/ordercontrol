@@ -16,11 +16,17 @@ class Partner {
     }
 
     getPartnerOrdersLastId(){
-        return this.orders[this.getPartnerOrdersCount() - 1].id_ord;
+        try {
+            return this.orders[this.getPartnerOrdersCount() - 1].id_ord;
+        }catch(e){
+            return 0;
+        }
     }
 
     insertOrder(orderObj){
         this.orders.push(orderObj);
+        let orders = this.orders;
+        return orders;
     }
   }
 

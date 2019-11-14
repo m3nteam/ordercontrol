@@ -1,7 +1,7 @@
 <template>
     <q-btn
         round
-        :flat="flat"
+        :flat="flat || false"
         :color="color || 'negative'"
         icon="delete"
         @click.stop="clicked"

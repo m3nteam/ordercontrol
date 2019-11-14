@@ -157,8 +157,8 @@
                             :pagination="tblPagination"
                             :visibleColumns="tblVisColImport"
                             rowKey="product"
-                        >
-                        </product-table>
+                            @updatePagination="handleUpdatePagination"
+                        />
                     </expansion-partner-custom>
                 </list-custom>
             </div>
@@ -259,8 +259,8 @@
             },
 
             filterData(){
-                let dateF = this.jsFunctions.stringToDate(this.dateFrom, "/");
-                let dateT = this.jsFunctions.stringToDate(this.dateTo, "/");
+                let dateF = jsFunctions.stringToDate(this.dateFrom, "/");
+                let dateT = jsFunctions.stringToDate(this.dateTo, "/");
 
                 if (dateF > dateT) {
                     this.$q.notify({

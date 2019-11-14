@@ -50,6 +50,7 @@
                             <q-item>
                                 <q-item-section>
                                     <button-delete
+                                        :flat="true"
                                         @clicked="deleteOrder([item._id, order.id_ord])"
                                     ></button-delete>
                                 </q-item-section>
@@ -58,14 +59,13 @@
                         </template>
 
                         <product-table
-                            dense
                             :data="order.data"
                             :columns="tblColumns"
-                            :pagination.sync="tblPagination"
+                            :pagination="tblPagination"
                             :visibleColumns="tblVisColImport"
                             rowKey="product"
-                        >
-                        </product-table>
+                            @updatePagination="handleUpdatePagination"
+                        />
                     </q-expansion-item>
                 </expansion-partner-custom>
             </list-custom>
@@ -109,10 +109,6 @@
                     this.$store.dispatch('storeDb/setShowAllPartners', val, {root: true});
                 }
             }
-        },
-
-        mounted(){
-            this.deleteOrder();
         },
 
         methods:{

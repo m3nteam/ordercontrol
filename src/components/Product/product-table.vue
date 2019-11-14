@@ -3,7 +3,7 @@
         dense
         :data="data"
         :columns="columns"
-        :pagination="pagination"
+        :pagination.sync="localPagination"
         :visible-columns="visibleColumns"
         :row-key="rowKey"
     >
@@ -12,6 +12,18 @@
 
 <script>
 export default {
-    props:['data', 'columns', 'pagination', 'visibleColumns', 'rowKey']
+    props:['data', 'columns', 'pagination', 'visibleColumns', 'rowKey'],
+
+    computed:{
+        localPagination:{
+            get(){
+                return this.pagination;
+            },
+            set(val){
+                this.$emit('updatePagination', val);
+            }
+        }
+    }
+
 }
 </script>

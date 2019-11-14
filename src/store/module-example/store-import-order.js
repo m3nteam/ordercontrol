@@ -10,7 +10,14 @@ const state = {
 
 const mutations = {
     async getdbPartners(state){
-        state.optionsPartner = this.state.dbStore.dbPartners;
+        state.dbData = this.state.storeDb.allData;
+        let partners = [];
+
+        state.dbData.forEach(partner => {
+            partners.push({_id: partner._id, name:partner.name});
+        });
+        
+        state.optionsPartner = partners;
     },
 
     setInitValues(state){
@@ -39,7 +46,7 @@ const mutations = {
 const actions = {
     async getdbPartners({commit, dispatch}){
         Loading.show();
-            !this.state.dbStore.dbPartners.length ? await dispatch('dbStore/dbGetPartners', null, {root: true}) : '';
+            await dispatch('storeDb/getDbData', null, {root: true});
             commit('getdbPartners');
         Loading.hide();
     },
@@ -65,11 +72,17 @@ const actions = {
     },
 
     saveImportData({ dispatch }, payload){
-        dispatch('dbStore/saveImportData', payload, {root: true})
+        console.log(payload);
+        return;
+        dispatch('storeDb/updatePartner', payload, {root: true});
     },
 }
 
 const getters = {
+    getDbData(state){
+        return state.dbData;  
+    },
+
     importDate(state){
         return state.importDate;
     },

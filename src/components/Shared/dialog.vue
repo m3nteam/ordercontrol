@@ -25,7 +25,6 @@
             <q-space />
 
             <button-delete
-                :flat="false"
                 @clicked="onOKClick"
             ></button-delete>
       </q-card-actions>
