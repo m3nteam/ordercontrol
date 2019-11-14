@@ -1,11 +1,11 @@
 <template>
-   <div class="q-pa-md">
-       <q-page 
+      <q-page 
         padding
-        class="text-primary absolute-center text-overline text-weight-bolder">
-            <h1 style="text: center;">Dobrodošli</h1>
-    </q-page>
-  </div>
+        class="q-pa-md flex flex-center text-primary text-overline text-weight-bolder">
+          <h2>Dobrodošli</h2>
+
+          <!-- <img alt="Welcome" src="~assets/welcome.png"> -->
+  </q-page>
 </template>
 
 <script>
@@ -15,5 +15,8 @@
 </script>
 
 <style>
+.text-center{
+  text: center;
+}
 
 </style>
