@@ -252,18 +252,24 @@
             saveDataToDb() {
                 let partnerId = this.partnerId;
 
+                let db = new dbClass(this.dbData);
+                let dbPartner = db.getPartnerById(partnerId);
+                let partner = new partnerClass(dbPartner)
+
+                let newOrderId = partner.getPartnerOrdersLastId() + 1;
                 let order = {
-                    id_ord: null,
+                    id_ord: newOrderId,
                     date: this.importDate,
                     data: this.excelData.results
                 };
 
                 let payload = {
-                    partnerId: partnerId,
+                    partner: Object.assign({}, partner),
                     order: order,
                 };
 
-                this.$store.dispatch('storeImport/saveImportData', payload, {root: true});
+                this.$store.dispatch('storeImport/prepareInsertObj', payload, {root: true});
+                this.$store.dispatch('storeImport/saveImportData', this.$store.getters['storeImport/getInsertObj'], {root: true});
                 this.emptyFilledTable();
             },
 

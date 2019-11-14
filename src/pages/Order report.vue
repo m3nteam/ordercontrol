@@ -13,6 +13,15 @@
                 <q-card class="q-mb-sm" bordered>
                     <!-- Partner filter -->
                     <q-card-section class="row min-component-width">
+                        <div class="">
+                            <q-checkbox
+                                v-model="showActiveOnly"
+                                label="Prikazi sve"
+                                left-label
+                                @input="showActive"
+                            />
+                        </div>
+                        <div class="col text-right">
                         <q-select
                             class="col"
                             dense
@@ -26,6 +35,7 @@
                             map-options
                             @input="partnerSelected"
                         />
+                        </div>
                     </q-card-section>
                     
                     <!-- Product filter -->
@@ -90,14 +100,6 @@
                                 </q-icon>
                             </template>
                             </q-input>
-                        </div>
-                        <div class="col text-right">
-                            <q-checkbox
-                                v-model="showActiveOnly"
-                                label="Prikazi samo aktivne partnere"
-                                left-label
-                                @input="showActive"
-                            />
                         </div>
                     </q-card-section>
 
@@ -255,7 +257,7 @@
             },
 
             showActive(){
-                this.$store.dispatch('storeReport/prepareReportPartners', this.showActiveOnly, {root: true})
+                this.$store.dispatch('storeReport/prepareReportPartners', !this.showActiveOnly, {root: true})
             },
 
             filterData(){

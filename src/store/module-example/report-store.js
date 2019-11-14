@@ -1,4 +1,6 @@
 import jsFunctions from '../../js-script/js-functions2';
+import PartnerOrder from '../../../services/PartnerOrder';
+import { Loading } from 'quasar'
 
 const state = {
     reportData:[],
@@ -10,6 +12,8 @@ const mutations = {
     setReportData(state, result){
         state.reportData = result.filter(data => data.orders.length > 0);
         state.filterData = state.reportData;
+        console.log(result);
+        
     },
 
     setFilterData(state, filterSettings){
@@ -34,9 +38,11 @@ const mutations = {
 };
 
 const actions = {
-    prepareReportData({ commit }){
-        commit('setReportData', this.getters['storeDb/getDbData']);
-        commit('setReportPartners', false);
+    async prepareReportData({ commit }){
+        Loading.show();
+        commit('setReportData', await PartnerOrder.getDbData());
+        commit('setReportPartners', true);
+        Loading.hide();
     },
 
     prepareFilteredData({ commit }, filterSettup){

@@ -6,6 +6,7 @@ const state = {
     excelData: { header: null, results: null },
     partnerId: null,
     optionsPartner: [],
+    insertObj:{},
 }
 
 const mutations = {
@@ -41,6 +42,12 @@ const mutations = {
     setOptionsPartner(state, payload){
         state.optionsPartner = payload;
     },
+
+    prepareInsertObj(state, payload){
+        payload.partner.orders.push(payload.order)
+        let partner = payload.partner;
+        state.insertObj = partner;
+    },
 }
 
 const actions = {
@@ -71,10 +78,11 @@ const actions = {
         commit('setPartnerId', id)
     },
 
+    prepareInsertObj({commit}, payload){
+        commit('prepareInsertObj', payload);
+    },
+
     saveImportData({ dispatch }, payload){
-        console.log(payload);
-        let partnerToUpdateObj = 1
-        return;
         dispatch('storeDb/updatePartner', payload, {root: true});
     },
 }
@@ -98,6 +106,10 @@ const getters = {
 
     optionsPartner(state){
         return state.optionsPartner;
+    },
+
+    getInsertObj(state){
+        return state.insertObj;
     }
 }
 
