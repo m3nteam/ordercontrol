@@ -197,8 +197,8 @@ export default class jsFunctions{
     }
     
 /* ******************************************************************************************* */
-    getNewPartnerId(dbObj){
-        let partnerCount = (dbObj.length + 1).toString();
+    getNewPartnerId(dbObjAll){
+        let partnerCount = (dbObjAll.length + 1).toString();
         let newId = "00000" + partnerCount;
         newId = newId.slice(partnerCount.length);
         return newId;

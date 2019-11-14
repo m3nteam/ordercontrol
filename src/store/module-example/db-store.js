@@ -55,7 +55,11 @@ const getters = {
 
     getPreviewData(state, getters){
         return getters.getDbData.filter(partner => partner.orders.length > 0);
-    }
+    },
+    
+    getAllDbData(state){
+        return state.allData;
+    },
 };
 
 export default{

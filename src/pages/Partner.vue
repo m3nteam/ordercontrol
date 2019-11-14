@@ -139,7 +139,7 @@
 
             submitDialogInsert(value) {
                 if (value[0]) {
-                    let newId = this.jsFunctions.getNewPartnerId(this.dbObj);
+                    let newId = this.jsFunctions.getNewPartnerId(this.dbObjAll);
                     value[1].id = newId;
                     this.$store.dispatch('storeDb/insertPartner', value[1], {root: true});
                 };
