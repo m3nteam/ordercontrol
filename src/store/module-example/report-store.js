@@ -53,7 +53,7 @@ const getters = {
         return jsFunctions.prepareReportSum(state.filterData);
     },
 
-    getReportData(state, getters){
+    getFilteredData(state, getters){
         return getters.getFilteredReportData;
     },
     

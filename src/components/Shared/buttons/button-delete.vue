@@ -1,8 +1,8 @@
 <template>
     <q-btn
         round
-        flat
-        color="negative"
+        :flat="flat"
+        :color="color || 'negative'"
         icon="delete"
         @click.stop="clicked"
     ></q-btn>
@@ -10,7 +10,7 @@
 
 <script>
 export default {
-    props:[],
+    props:[ 'color', 'flat' ],
 
     methods:{
         clicked(){

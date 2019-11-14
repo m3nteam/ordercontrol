@@ -12,6 +12,12 @@
                 class="min-component-width"
                 title="Pregled porudžbina"
             >
+                <q-checkbox
+                    left-label
+                    label="Prikaži sve"
+                    dark
+                    v-model="showAllPartners"
+                ></q-checkbox>
             </banner-blue>
 
             <!-- List of data -->
@@ -44,7 +50,7 @@
                             <q-item>
                                 <q-item-section>
                                     <button-delete
-                                        @clicked="deleteOrder(order.id_ord)"
+                                        @clicked="deleteOrder([item._id, order.id_ord])"
                                     ></button-delete>
                                 </q-item-section>
                             </q-item>
@@ -68,6 +74,7 @@
 </template>
 
 <script>
+    import CustomDialogDelete from '../components/Shared/dialog'
     //mixin
     import dbObjects from '../mixin/db-objects'
     import ordersTableSettings from '../mixin/orders-table-settings'
@@ -76,23 +83,56 @@
     import listMixin from '../mixin/lists-mixin'
     import partnerComponentMixin from '../mixin/partner-components-mixin'
     import productComponentMixin from '../mixin/product-components-mixin'
+    //class
+    import DbClass from '../../Class/Db'
+    import PartnerClass from '../../Class/Partner'
 
     export default {
         mixins: [dbObjects, ordersTableSettings, buttonMixin, bannerMixin, listMixin, partnerComponentMixin, productComponentMixin],
 
+        async beforeCreate(){
+            await this.$store.dispatch('storeDb/getDbData', null, {root: true});
+        },
+
         computed:{
             dbData:{
                 get(){
-                    return this.dbObj;
+                    return this.$store.getters['storeDb/getPreviewData'];
+                }
+            },
+
+            showAllPartners: {
+                get() {
+                    return this.$store.getters['storeDb/showAllPartners'];
+                },
+                set(val) {
+                    this.$store.dispatch('storeDb/setShowAllPartners', val, {root: true});
                 }
             }
         },
 
+        mounted(){
+            this.deleteOrder();
+        },
+
         methods:{
-            deleteOrder(orderId){
-                console.log(`delete order ${orderId}`);
-                
-            }
+            async deleteOrder(deleteObj){
+                this.$q.dialog({
+                    component: CustomDialogDelete,
+                    parent: this,
+                    title: 'Brisanje porudžbine',
+                    text: 'Da li ste sigurni da želite da obrišete porudžbinu?',
+                }).onOk(() => {
+                    const dbDataClass = new DbClass(this.dbData)
+                    let partner = new PartnerClass(dbDataClass.getPartnerById(deleteObj[0]));
+                    let newOrdersValue = partner.orders.filter(order => order.id_ord !== deleteObj[1]);
+                    partner.orders = newOrdersValue;
+                    
+                    this.$store.dispatch('storeDb/updatePartner', partner, {root: true});
+                }).onCancel(() => {
+                    // on cancel btn click
+                })
+            },
         }
     }
 </script>

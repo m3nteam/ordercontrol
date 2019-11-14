@@ -46,11 +46,15 @@ const actions = {
 
 const getters = {
     getDbData(state){
-        return  state.showAllPartners ? state.allData : state.activeData;
+        return state.showAllPartners ? state.allData : state.activeData;
     },
 
     showAllPartners() {
         return state.showAllPartners;
+    },
+
+    getPreviewData(state, getters){
+        return getters.getDbData.filter(partner => partner.orders.length > 0);
     }
 };
 

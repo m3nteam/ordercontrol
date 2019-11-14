@@ -1,6 +1,7 @@
 class Partner {
     constructor(partnerObj) {
       this._id = partnerObj._id,
+      this.id = partnerObj.id,
       this.name = partnerObj.name,
       this.active = partnerObj.active,
       this.orders = partnerObj.orders

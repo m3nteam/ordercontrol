@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 
 import storeDb from './module-example/db-store'
 import storeReport from './module-example/report-store'
+import storeImport from './module-example/store-import-order'
 
 Vue.use(Vuex)
 
@@ -16,6 +17,7 @@ export default function (/* { ssrContext } */) {
     modules: {
       storeDb,
       storeReport,
+      storeImport,
     },
 
     // enable strict mode (adds overhead!)

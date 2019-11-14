@@ -201,7 +201,8 @@
             }
         },
 
-        beforeMount(){
+        async beforeCreate(){
+            await this.$store.dispatch('storeDb/getDbData', null, {root: true});
             this.$store.dispatch('storeReport/prepareReportData', null, {root: true});
         },
 
@@ -221,7 +222,7 @@
             reportData:{
                 get(){
                     if (this.isFiltered) {
-                        return this.$store.getters['storeReport/getReportData'];
+                        return this.$store.getters['storeReport/getFilteredData'];
                     }
                 }
             }

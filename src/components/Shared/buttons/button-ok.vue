@@ -1,7 +1,7 @@
 <template>
     <q-btn
         round
-        color="positive"
+        :color="color || 'positive'"
         icon="check"
         @click="clicked"
     ></q-btn>
@@ -9,7 +9,7 @@
 
 <script>
 export default {
-    props:[],
+    props:[ 'color' ],
 
     methods:{
         clicked(){
