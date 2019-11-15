@@ -23,4 +23,8 @@ export default {
   .q-expansion-item{
     @extend .q-list;
   } 
+
+  .input-dialog {
+    margin-bottom: 10px;
+  }
 </style>

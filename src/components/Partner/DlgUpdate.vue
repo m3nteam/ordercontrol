@@ -12,7 +12,7 @@
         <q-separator color="primary" />
 
         <!-- Field for partner id -->
-        <q-card-section style="padding-bottom: 0;">
+        <q-card-section style="padding-bottom: 0;" class="input-dialog">
           <q-input
             dense
             outlined
@@ -24,7 +24,7 @@
         </q-card-section>
 
         <!-- Field for partner name -->
-        <q-card-section style="padding-bottom: 0;">
+        <q-card-section style="padding-bottom: 0;" class="input-dialog">
           <q-input
             dense
             outlined

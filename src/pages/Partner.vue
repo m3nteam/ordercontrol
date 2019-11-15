@@ -4,7 +4,7 @@
 
         <!-- Title of list when partners not exists -->
         <banner-orange
-            v-if="this.dbObj ==''"
+            v-if="this.dbObjAll ==''"
         >NEMA PODATAKA</banner-orange>
         
         <div v-else>

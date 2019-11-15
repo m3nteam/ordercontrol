@@ -1,9 +1,10 @@
 
 <template>
-  <div>
+   <q-page class="q-pa-sm">
     <input ref="excel-upload-input" class="excel-upload-input" type="file" accept=".xlsx, .xls" @change="handleClick" />
     <div v-if="excelData.results == null" class="drop" @drop="handleDrop" @dragover="handleDragover" @dragenter="handleDragover" @click="handleUpload">
-      Drop excel file here or click to browse file
+      Prevuci excel ili pretraži na klik
+      <!-- Drop excel file here or click to browse file -->
       <!-- <q-btn :loading="loading" size="mini" @click="handleUpload" color="primary">
         Browse
       </q-btn> -->
@@ -87,7 +88,7 @@
             ></button-ok>
         </div>
     </div>
-  </div>
+  </q-page>
 </template>
 
 <script>

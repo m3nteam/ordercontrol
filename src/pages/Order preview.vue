@@ -3,7 +3,7 @@
         <!-- Title of list when data not exists -->
         <banner-orange
             class="min-component-width"
-            v-if="this.dbData ==''"
+            v-if="this.dbObjAll ==''"
         >Nema podataka za prikaz</banner-orange>
 
         <div v-else>
