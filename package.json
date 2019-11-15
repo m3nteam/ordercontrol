@@ -1,11 +1,11 @@
 {
   "name": "ordercontrol",
   "version": "0.0.1",
-  "description": "A Quasar Framework app",
-  "productName": "Quasar App",
+  "description": "Kontrola porudžbina",
+  "productName": "Porudžbine",
   "cordovaId": "org.cordova.quasar.app",
   "capacitorId": "",
-  "author": "Mirko Rajovic <rajovicmirko@gmail.com>",
+  "author": "N3M <m3nrepo@gmail.com>",
   "private": true,
   "scripts": {
     "test": "echo \"No test specified\" && exit 0",
