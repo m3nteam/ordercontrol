@@ -133,9 +133,11 @@ export default class jsFunctions{
                     let dateTo = null;
 
                     if (filters.dateRange !== null) {
-                        orderDate = this.stringToDate(order[filters.dateRange[0]], "/");
-                        dateFrom = this.stringToDate(filters.dateRange[1], "/");
-                        dateTo = this.stringToDate(filters.dateRange[2], "/");
+                        let dbDateDelimiter = order[filters.dateRange[0]] ? order[filters.dateRange[0]].slice(4, 5) : "";
+                        let dateDelimiter = filters.dateRange[1] ? filters.dateRange[1].slice(4, 5) : "";
+                        orderDate = this.stringToDate(order[filters.dateRange[0]], dbDateDelimiter);
+                        dateFrom = this.stringToDate(filters.dateRange[1], dateDelimiter);
+                        dateTo = this.stringToDate(filters.dateRange[2], dateDelimiter);
                     }
                     
                     if (filters.dateRange == null || (dateFrom <= orderDate && dateTo >= orderDate)) {

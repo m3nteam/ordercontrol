@@ -12,8 +12,6 @@ const mutations = {
     setReportData(state, result){
         state.reportData = result.filter(data => data.orders.length > 0);
         state.filterData = state.reportData;
-        console.log(result);
-        
     },
 
     setFilterData(state, filterSettings){

@@ -261,8 +261,9 @@
             },
 
             filterData(){
-                let dateF = jsFunctions.stringToDate(this.dateFrom, "/");
-                let dateT = jsFunctions.stringToDate(this.dateTo, "/");
+                let dateDelimiter = this.dateFrom ? this.dateFrom.slice(4, 5) : "";
+                let dateF = jsFunctions.stringToDate(this.dateFrom, dateDelimiter);
+                let dateT = jsFunctions.stringToDate(this.dateTo, dateDelimiter);
 
                 if (dateF > dateT) {
                     this.$q.notify({
