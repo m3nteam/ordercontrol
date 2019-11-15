@@ -115,6 +115,10 @@
             }
         },
 
+        async beforeMount(){
+            await this.getdbPartners();
+        },
+
         computed:{
             ...mapState('storeImport', ['optionsPartner']),
             ...mapGetters('storeImport', ['importDate', 'excelData', 'partnerId']),
@@ -239,8 +243,7 @@
                     reader.readAsArrayBuffer(rawFile)
                 })
             },
-            async generateData({ header, results }) {
-                await this.getdbPartners();
+            generateData({ header, results }) {
                 this.setExcelData({ header, results })
                 this.data = results
                 this.onSuccess && this.onSuccess(this.excelData)
