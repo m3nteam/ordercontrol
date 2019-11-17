@@ -1,6 +1,8 @@
 import jsFunctions from '../../js-script/js-functions2';
 import PartnerOrder from '../../../services/PartnerOrder';
 import { Loading } from 'quasar'
+//additional
+import XLSX from 'xlsx'
 
 const state = {
     reportData:[],
@@ -50,6 +52,26 @@ const actions = {
     prepareReportPartners({ commit }, showActiveOnly){
         commit('setReportPartners', showActiveOnly);
     },
+
+    exportFilterResult({commit}, payload){
+        var wb = XLSX.utils.book_new();
+        let exportObj = payload;
+
+        exportObj.forEach(partner => {
+            partner.dataSet.forEach(dataSet => {
+                delete dataSet.__index;
+            });
+            let dataWs = XLSX.utils.json_to_sheet(partner.dataSet);
+            XLSX.utils.book_append_sheet(wb, dataWs, partner.name);
+        });
+
+        if (exportObj.length > 1) {
+            XLSX.writeFile(wb, 'Izvestaj.xlsx');
+        }
+        else{
+            XLSX.writeFile(wb, `Izvestaj ${exportObj[0].name}.xlsx`);
+        }
+    }
 };
 
 const getters = {

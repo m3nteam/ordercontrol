@@ -112,6 +112,15 @@
                             ></button-cancel>
                         </div>
 
+                        <div class="col text-center"
+                            v-if="isFiltered == true"
+                        >
+                            <button-import-export
+                                v-if="isFiltered == true"
+                                @clicked="exportData(reportData)"
+                            ></button-import-export>
+                        </div>
+
                         <div class="col text-right">
                             <button-ok
                                 @clicked="filterData"
@@ -291,6 +300,10 @@
                     product: null,
                     dateRange: null,
                 });
+            },
+
+            exportData(payload){
+                this.$store.dispatch('storeReport/exportFilterResult', payload, {root: true})
             }
         }
     }
