@@ -254,6 +254,16 @@
             },
 
             saveDataToDb() {
+                if (this.partnerId == null) {
+                    this.$q.notify({
+                        color: 'negative',
+                        textColor: 'white',
+                        icon: 'error',
+                        message: "Partner mora biti izabran"
+                    })
+                    return;
+                };
+
                 let partnerId = this.partnerId;
 
                 let db = new dbClass(this.dbData);
